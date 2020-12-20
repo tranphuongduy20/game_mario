@@ -1,6 +1,7 @@
 #include "Goomba.h"
 #include "Brick.h"
 #include "CBrick.h"
+#include "BrickStand.h"
 #include "Point.h"
 
 Goomba::Goomba(Player* mario)
@@ -22,7 +23,6 @@ Goomba::Goomba(Player* mario)
 
 void Goomba::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	//DebugOut(L"id gooooo %d \n", id_goomba);
 	if (isDeath)
 		return;
 	if (id_goomba == GOOMBA_NORMAL)
@@ -68,11 +68,6 @@ void Goomba::GetBoundingBox(float& left, float& top, float& right, float& bottom
 
 void Goomba::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 {
-	//
-	// TO-DO: make sure Goomba can interact with the world and to each of them too!
-	// 	
-	//DebugOut(L"id goomba %d \n",id_goomba);
-	//
 	if (isDeath)
 		return;
 	if (id_goomba == 2)
@@ -178,6 +173,35 @@ void Goomba::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 			{
 				//DebugOut(L"gia tri nx %d \n ", nx);
 				if (dynamic_cast<CBrick*>(e->obj))
+				{
+					if (e->nx != 0)
+						x += dx;
+				}
+				if (dynamic_cast<Brick*>(e->obj))
+				{
+					Brick* brick = dynamic_cast<Brick*>(e->obj);
+					if (e->nx != 0)
+					{
+						x += dx;
+					}
+					else if (e->ny < 0)
+					{
+						if (x <= brick->x)
+						{
+							x = brick->x;
+							SetState(GOOMBA_STATE_WALKING);
+							vx = GOOMBA_WALKING_SPEED;
+
+						}
+						else if (x >= brick->x + brick->frameW)
+						{
+							x = brick->x + brick->frameW;
+							SetState(GOOMBA_STATE_WALKING);
+							vx = -GOOMBA_WALKING_SPEED;
+						}
+					}
+				}
+				if (dynamic_cast<BrickStand*>(e->obj))
 				{
 					if (e->nx != 0)
 						x += dx;

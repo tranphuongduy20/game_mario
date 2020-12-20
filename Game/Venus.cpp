@@ -1,5 +1,6 @@
 #include "Venus.h"
 #include "VenusBullet.h"
+#include "Point.h"
 
 Venus::Venus(Player* mario, int piranhaType)
 {
@@ -16,6 +17,14 @@ Venus::Venus(Player* mario, int piranhaType)
 
 void Venus::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 {
+	if (make100)
+	{
+		Point* point = new Point();
+		point->SetPosition(x, y);
+		point->SetState(MAKE_100);
+		make100 = false;
+		listEffect.push_back(point);
+	}
 	if (isDeath)
 		return;
 	Entity::Update(dt);
@@ -72,6 +81,11 @@ void Venus::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 			SetState(FIRE_PIRANHA_STATE_MOVE_UP);
 		}
 	}
+	for (int i = 0; i < listEffect.size(); i++)
+	{
+		listEffect[i]->Update(dt, coObjects);
+	}
+
 }
 
 void Venus::Render()
@@ -145,7 +159,11 @@ void Venus::Render()
 	for (LPVENUSBULLET fireball : listFireball)
 		fireball->Render();
 	//RenderBoundingBox();
-	DebugOut(L"ani %d \n", ani);
+	for (int i = 0; i < listEffect.size(); i++)
+	{
+		listEffect[i]->Render();
+	}
+	//DebugOut(L"ani %d \n", ani);
 }
 
 void Venus::GetBoundingBox(float& l, float& t, float& r, float& b)

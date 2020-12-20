@@ -142,6 +142,21 @@
     <ClCompile Include="Pipe.cpp">
       <Filter>Header Files\GameSource\Object\Obstacle</Filter>
     </ClCompile>
+    <ClCompile Include="WorldScene.cpp">
+      <Filter>Header Files\GameSource\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldMapMario.cpp">
+      <Filter>Header Files\GameSource\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SpeechBubble.cpp">
+      <Filter>Header Files\GameSource\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="HammerBrother.cpp">
+      <Filter>Header Files\GameSource\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Cactus.cpp">
+      <Filter>Header Files\GameSource\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h">
@@ -284,6 +299,21 @@
     </ClInclude>
     <ClInclude Include="Pipe.h">
       <Filter>Header Files\GameSource\Object\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldScene.h">
+      <Filter>Header Files\GameSource\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldMapMario.h">
+      <Filter>Header Files\GameSource\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SpeechBubble.h">
+      <Filter>Header Files\GameSource\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="HammerBrother.h">
+      <Filter>Header Files\GameSource\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Cactus.h">
+      <Filter>Header Files\GameSource\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

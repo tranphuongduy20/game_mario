@@ -38,12 +38,12 @@ void Leaf::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 
 void Leaf::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 {
-	if (make100)
+	if (make1000)
 	{
 		Point* point = new Point();
 		point->SetPosition(x, y);
-		point->SetState(MAKE_100);
-		make100 = false;
+		point->SetState(MAKE_1000);
+		make1000 = false;
 		listEffect.push_back(point);
 		isDeath = true;
 	}

@@ -131,6 +131,8 @@ void MarioBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 							goomba->hasWing = false;
 					}
 					isDone = true;
+					goomba->make100 = true;
+					Game::GetInstance()->Score += 100;
 				}
 				else if (e->obj->GetType() == EntityType::KOOPA)
 				{
@@ -141,13 +143,16 @@ void MarioBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 						koopa->SetState(KOOPA_GREEN_STATE_DIE_UP);
 					koopa->hitByWeapon = true;
 					isDone = true;
+					koopa->make100 = true;
+					Game::GetInstance()->Score += 100;
 				}
 				else if (e->obj->GetType() == EntityType::VENUS)
 				{
 					Venus* venus = dynamic_cast<Venus*>(e->obj);
 					venus->isDeath = true;
 					isDone = true;
-	
+					venus->make100 = true;
+					Game::GetInstance()->Score += 100;
 				}
 				else if (e->obj->GetType() == EntityType::VENUSGREEN)
 				{

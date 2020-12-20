@@ -12,6 +12,8 @@
 #include "Koopa.h"
 #include "Mushroom.h"
 #include "Coin.h"
+#include "Venus.h"
+#include "VenusNoFire.h"
 
 using namespace std;
 
@@ -279,28 +281,6 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 					brick->SetState(CBRICK_STATE_COLLISION);
 				}
 			}
-			/*else if (e->obj->GetType() == EntityType::BROKENBRICK)
-			{
-				BrokenBrick* brokenBrick = dynamic_cast<BrokenBrick*>(e->obj);
-				if (nx != 0) vx = 0;
-				if (ny != 0) vy = 0;
-				if (e->ny != 0)
-				{
-					if (e->ny == -1)
-					{
-						isGround = true;
-						isJumping = false;
-						if ((flyTrip && level == MARIO_LEVEL_RACCOON) || y > dGround) {
-							dGround = y + w;
-						}
-						flyTrip = false;
-					}
-				}
-				if (e->ny > 0)
-				{
-					brokenBrick->SetState(BROKENBRICK_STATE_COLLISION);
-				}
-			}*/
 			else if (e->obj->GetType() == EntityType::BRICKSTAND)
 			{
 				CBrick* brick = dynamic_cast<CBrick*>(e->obj);
@@ -319,6 +299,86 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 					}
 				}
 			}
+			else if (e->obj->GetType() == EntityType::VENUS)
+			{
+				Venus* venus = dynamic_cast<Venus*>(e->obj);
+				//if (nx != 0) vx = 0;
+				//if (ny != 0) vy = 0;
+				if (untouchable == 0)
+				{
+					if (level > MARIO_LEVEL_BIG)
+					{
+						level = MARIO_LEVEL_BIG;
+						StartUntouchable();
+					}
+					else if (level == MARIO_LEVEL_BIG)
+					{
+						level = MARIO_LEVEL_SMALL;
+						StartUntouchable();
+					}
+					else
+					{
+						SetState(MARIO_STATE_DIE);
+						return;
+					}
+					vx = 0;
+					vy = 0;
+
+				}
+			}
+			else if (e->obj->GetType() == EntityType::VENUSGREEN)
+			{
+				Venus* venus = dynamic_cast<Venus*>(e->obj);
+				//if (nx != 0) vx = 0;
+				//if (ny != 0) vy = 0;
+				if (untouchable == 0)
+				{
+					if (level > MARIO_LEVEL_BIG)
+					{
+						level = MARIO_LEVEL_BIG;
+						StartUntouchable();
+					}
+					else if (level == MARIO_LEVEL_BIG)
+					{
+						level = MARIO_LEVEL_SMALL;
+						StartUntouchable();
+					}
+					else
+					{
+						SetState(MARIO_STATE_DIE);
+						return;
+					}
+					vx = 0;
+					vy = 0;
+
+				}
+			}
+			else if (e->obj->GetType() == EntityType::VENUSNOFIRE)
+			{
+				VenusNoFire* venusNoFire = dynamic_cast<VenusNoFire*>(e->obj);
+				//if (nx != 0) vx = 0;
+				//if (ny != 0) vy = 0;
+				if (untouchable == 0)
+				{
+					if (level > MARIO_LEVEL_BIG)
+					{
+						level = MARIO_LEVEL_BIG;
+						StartUntouchable();
+					}
+					else if (level == MARIO_LEVEL_BIG)
+					{
+						level = MARIO_LEVEL_SMALL;
+						StartUntouchable();
+					}
+					else
+					{
+						SetState(MARIO_STATE_DIE);
+						return;
+					}
+					vx = 0;
+					vy = 0;
+				}
+			}
 			else if (e->obj->GetType() == EntityType::GOOMBA)
 			{
 				Goomba* goomba = dynamic_cast<Goomba*>(e->obj);
@@ -331,7 +391,6 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 						{
 							goomba->SetState(GOOMBA_STATE_DIE);
 							goomba->make100 = true;
-
 							Game::GetInstance()->Score += 100;
 							vy = -MARIO_JUMP_DEFLECT_SPEED;
 							isJumping = true;
@@ -344,6 +403,7 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 							goomba->SetState(GOOMBA_RED_STATE_NO_WING_WALK);	//khi co canh thi ve trang thai di bo							
 							vy = -MARIO_JUMP_DEFLECT_SPEED;
 							goomba->make200 = true;
+							Game::GetInstance()->Score += 200;
 							goomba->hasWing = false;
 							isJumping = true;
 						}
@@ -355,6 +415,7 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 								vy = -MARIO_JUMP_DEFLECT_SPEED;
 								isJumping = true;
 								goomba->make100 = true;
+								Game::GetInstance()->Score += 100;
 							}
 						}
 					}
@@ -424,6 +485,7 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 						{
 							koopa->SetState(KOOPA_RED_STATE_DIE);
 							koopa->make100 = true;
+							Game::GetInstance()->Score += 100;
 							vy = -MARIO_JUMP_DEFLECT_SPEED;
 							isJumping = true;
 						}
@@ -431,6 +493,7 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 						{
 							koopa->SetState(KOOPA_RED_STATE_DIE);
 							koopa->make100 = true;
+							Game::GetInstance()->Score += 100;
 							vy = -MARIO_JUMP_DEFLECT_SPEED;
 							isJumping = true;
 						}
@@ -438,6 +501,7 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 						{
 							koopa->SetState(KOOPA_RED_STATE_DIE_UP);
 							koopa->make100 = true;
+							Game::GetInstance()->Score += 100;
 							vy = -MARIO_JUMP_DEFLECT_SPEED;
 							isJumping = true;
 						}
@@ -445,6 +509,7 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 						{
 							koopa->SetState(KOOPA_RED_STATE_DIE_AND_MOVE);
 							koopa->make100 = true;
+							Game::GetInstance()->Score += 100;
 							vy = -MARIO_JUMP_DEFLECT_SPEED;
 							if (lastnx > 0)
 							{
@@ -460,6 +525,7 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 							koopa->SetState(KOOPA_RED_STATE_DIE_AND_MOVE_UP);
 							
 							koopa->make100 = true;
+							Game::GetInstance()->Score += 100;
 							if (lastnx > 0)
 							{
 								koopa->nx = 1;
@@ -535,6 +601,7 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 							else
 								koopa->SetState(KOOPA_GREEN_STATE_WALKING_LEFT);
 							koopa->make100 = true;
+							Game::GetInstance()->Score += 100;
 							koopa->hasWing = false;
 							vy = -MARIO_JUMP_DEFLECT_SPEED;
 							isJumping = true;
@@ -543,6 +610,7 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 						{
 							koopa->SetState(KOOPA_GREEN_STATE_DIE);
 							koopa->make100 = true;
+							Game::GetInstance()->Score += 100;
 							vy = -MARIO_JUMP_DEFLECT_SPEED;
 							isJumping = true;
 						}
@@ -550,6 +618,7 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 						{
 							koopa->SetState(KOOPA_GREEN_STATE_DIE);
 							koopa->make100 = true;
+							Game::GetInstance()->Score += 100;
 							vy = -MARIO_JUMP_DEFLECT_SPEED;
 							isJumping = true;
 						}
@@ -557,6 +626,7 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 						{
 							koopa->SetState(KOOPA_GREEN_STATE_DIE_UP);
 							koopa->make100 = true;
+							Game::GetInstance()->Score += 100;
 							vy = -MARIO_JUMP_DEFLECT_SPEED;
 							isJumping = true;
 						}
@@ -565,6 +635,7 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 
 							koopa->SetState(KOOPA_GREEN_STATE_DIE_AND_MOVE);
 							koopa->make100 = true;
+							Game::GetInstance()->Score += 100;
 							if (lastnx > 0)
 							{
 								koopa->nx = 1;
@@ -578,6 +649,7 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 						{
 							koopa->SetState(KOOPA_GREEN_STATE_DIE_AND_MOVE_UP);
 							koopa->make100 = true;
+							Game::GetInstance()->Score += 100;
 							if (lastnx > 0)
 							{
 								koopa->nx = 1;
@@ -1083,6 +1155,9 @@ void Player::GetBoundingBox(float& left, float& top, float& right, float& bottom
 		top = y;
 		right = x + MARIO_BIG_BBOX_WIDTH;
 		bottom = y + MARIO_BIG_BBOX_HEIGHT;
+		if (isCrouch) {
+			top = y + 12;
+		}
 	}
 	else if (level == MARIO_LEVEL_SMALL)
 	{
@@ -1097,6 +1172,9 @@ void Player::GetBoundingBox(float& left, float& top, float& right, float& bottom
 		top = y;
 		right = x + MARIO_RACCOON_BBOX_WIDTH;
 		bottom = y + MARIO_RACCOON_BBOX_HEIGHT;
+		if (isCrouch) {
+			top = y + 12;
+		}
 	}
 	else if (level == MARIO_LEVEL_FIRE)
 	{
@@ -1104,6 +1182,9 @@ void Player::GetBoundingBox(float& left, float& top, float& right, float& bottom
 		top = y;
 		right = x + MARIO_FIRE_BBOX_WIDTH;
 		bottom = y + MARIO_FIRE_BBOX_HEIGHT;
+		if (isCrouch) {
+			top = y + 12;
+		}
 	}
 }
 

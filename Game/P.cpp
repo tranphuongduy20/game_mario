@@ -146,7 +146,7 @@ void ItemP::Render()
 	{
 		animationSet->at(0)->Render(nx, x, y, alpha);
 	}
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void ItemP::SetState(int state)

@@ -2,6 +2,8 @@
 
 #include "Entity.h"
 #include "Player.h"
+#include "Point.h"
+#include "Goomba.h"
 
 
 #define KOOPAS_WALKING_SPEED 0.03f;
@@ -36,7 +38,7 @@
 #define KOOPA_GREEN_STATE_HOLDING_UP	 19
 #define KOOPA_GREEN_STATE_HAS_WING_FLY_LEFT	20
 #define KOOPA_GREEN_STATE_HAS_WING_FLY_RIGHT 21
-#define KOOPA_GREEN_STATE_DIE			 22
+//#define KOOPA_GREEN_STATE_DIE			 22
 
 class Koopa : public Entity
 {
@@ -60,5 +62,6 @@ public:
 	Koopa(Player* mario, int id_Koopa);
 	int last_state;
 	Player* Mario;
+	vector<LPGAMEENTITY> listEnemies;
 	virtual void SetState(int state);
 };

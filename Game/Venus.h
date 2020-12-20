@@ -61,6 +61,7 @@ class Venus : public Entity
 {
 public:
 	vector<LPVENUSBULLET> listFireball;
+	vector <LPGAMEENTITY> listEffect;
 
 	DWORD attackStartTime;
 	DWORD sleepStartTime;

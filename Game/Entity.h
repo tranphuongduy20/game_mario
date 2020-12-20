@@ -11,6 +11,7 @@
 using namespace std;
 
 #define ID_TEX_BBOX -100		// special texture to draw object bounding box
+#define ID_TEX_HUD_BG -200
 
 class Entity;
 typedef Entity* LPGAMEENTITY;
@@ -49,6 +50,7 @@ public:
 
 	float x;
 	float y;
+	float start_x, start_y;
 	//float vx, vy;
 	//float x, y;
 	float dx;	// dx = vx*dt

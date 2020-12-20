@@ -128,6 +128,7 @@
     <ClInclude Include="BrickStand.h" />
     <ClInclude Include="BrokenBrick.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Cactus.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CBrick.h" />
     <ClInclude Include="Centipede.h" />
@@ -144,6 +145,7 @@
     <ClInclude Include="Goomba.h" />
     <ClInclude Include="Gunner.h" />
     <ClInclude Include="GunUp.h" />
+    <ClInclude Include="HammerBrother.h" />
     <ClInclude Include="HealthBar.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="Item.h" />
@@ -163,6 +165,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="MarioBullet.h" />
+    <ClInclude Include="SpeechBubble.h" />
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="TileMap.h" />
@@ -170,6 +173,8 @@
     <ClInclude Include="Venus.h" />
     <ClInclude Include="VenusBullet.h" />
     <ClInclude Include="VenusNoFire.h" />
+    <ClInclude Include="WorldMapMario.h" />
+    <ClInclude Include="WorldScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animations.cpp" />
@@ -177,6 +182,7 @@
     <ClCompile Include="BrickStand.cpp" />
     <ClCompile Include="BrokenBrick.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Cactus.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CBrick.cpp" />
     <ClCompile Include="Centipede.cpp" />
@@ -193,6 +199,7 @@
     <ClCompile Include="Goomba.cpp" />
     <ClCompile Include="Gunner.cpp" />
     <ClCompile Include="GunUp.cpp" />
+    <ClCompile Include="HammerBrother.cpp" />
     <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Item.cpp" />
@@ -212,6 +219,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="MarioBullet.cpp" />
+    <ClCompile Include="SpeechBubble.cpp" />
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="TileMap.cpp" />
@@ -219,6 +227,8 @@
     <ClCompile Include="Venus.cpp" />
     <ClCompile Include="VenusBullet.cpp" />
     <ClCompile Include="VenusNoFire.cpp" />
+    <ClCompile Include="WorldMapMario.cpp" />
+    <ClCompile Include="WorldScene.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

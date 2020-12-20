@@ -9,7 +9,7 @@
 #include "Game.h"
 #include "Camera.h"
 
-#define SCREEN_WIDTH 350
+#define SCREEN_WIDTH 272
 
 class TileMap
 {
@@ -30,6 +30,6 @@ public:
 	int GetWidthTileMap();
 	void Load();
 	void LoadMap();
-	void Draw();
+	void Draw(float TILEMAP_X_OFFSET, float TILEMAP_Y_OFFSET);
 };
 

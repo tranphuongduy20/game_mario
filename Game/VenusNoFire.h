@@ -18,6 +18,7 @@ class VenusNoFire : public Entity
 public:
 	float start_x;	
 	float start_y;
+	vector <LPGAMEENTITY> listEffect;
 	DWORD timewaittoshoot = GetTickCount64();
 	DWORD timetomovedown;
 	bool moveup = true;

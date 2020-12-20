@@ -1,5 +1,6 @@
 #include "Money.h"
 #include "Brick.h"
+#include "Point.h"
 Money::Money(float posX, float posY)
 {
 	x = posX;
@@ -43,6 +44,14 @@ void Money::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 
 void Money::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 {
+	if (make100)
+	{
+		Point* point = new Point();
+		point->SetPosition(x, y);
+		point->SetState(MAKE_100);
+		make100 = false;
+		listEffect.push_back(point);
+	}
 	if (isDone)
 		return;
 	Entity::Update(dt, coObjects);
@@ -52,6 +61,14 @@ void Money::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 		if (vx == 0)
 			vx = -MONEY_WALKING_SPEED;
 	}*/
+	if (make100)
+	{
+		Point* point = new Point();
+		point->SetPosition(x, y);
+		point->SetState(MAKE_100);
+		make100 = false;
+		listEffect.push_back(point);
+	}
 	if (isCollis == true && isStart == false)
 	{
 		timeDelay += dt;
@@ -115,11 +132,19 @@ void Money::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 			}
 		}
 	}
+	for (int i = 0; i < listEffect.size(); i++)
+	{
+		listEffect[i]->Update(dt, coObjects);
+	}
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
 
 void Money::Render()
 {
+	for (int i = 0; i < listEffect.size(); i++)
+	{
+		listEffect[i]->Render();
+	}
 	if (isDone)
 		return;
 	int ani = MONEY_ANI_WALKING;
@@ -135,7 +160,6 @@ void Money::SetState(int state)
 	switch (state)
 	{
 	case MONEY_STATE_WALKING:
-		//y -= 2;
 		isCollis = true;
 		break;
 	case 0:

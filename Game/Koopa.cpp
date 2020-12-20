@@ -3,6 +3,7 @@
 #include "BrokenBrick.h"
 #include "Brick.h"
 #include "CBrick.h"
+#include "Goomba.h"
 
 Koopa::Koopa(Player* mario, int id_Koopa)
 {
@@ -236,14 +237,6 @@ void Koopa::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			if (id_koopa == KOOPA_RED)
 			{
-				/*if (dynamic_cast<CBrick*>(e->obj))
-				{
-					CBrick* cbrick = dynamic_cast<CBrick*>(e->obj);
-					if (e->nx != 0)
-					{
-						x += dx;
-					}
-				}*/
 				if (dynamic_cast<Brick*>(e->obj))
 				{
 					Brick* brick = dynamic_cast<Brick*>(e->obj);
@@ -267,19 +260,46 @@ void Koopa::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 							vx = -KOOPAS_WALKING_SPEED;
 						}
 					}
-					else if (e->nx != 0 && GetState() == KOOPA_RED_STATE_DIE_AND_MOVE && GetState() == KOOPA_RED_STATE_DIE_AND_MOVE_UP) {
-						//this->nx = -this->nx;
-						//x += dx;
-					}
 				}
+				//else if (dynamic_cast<Goomba*>(e->obj))
+				//{
+				//	Goomba* goomba = dynamic_cast<Goomba*>(e->obj);
+				//	if (GetState() == KOOPA_RED_STATE_DIE_AND_MOVE || GetState() == KOOPA_RED_STATE_DIE_AND_MOVE_UP)
+				//	{
+				//		//auto goomba = dynamic_cast<Goomba*>(listEnemies[i]);
+				//		if (goomba->id_goomba == GOOMBA_NORMAL)
+				//		{
+				//			listEnemies[i]->SetState(GOOMBA_STATE_DIE_FLY);
+				//			goomba->make100 = true;
+				//			Game::GetInstance()->Score += 100;
+				//		}
+				//	}
+				//}
 				else if (dynamic_cast<BrokenBrick*>(e->obj))
 				{
+					BrokenBrick* brokenbrick = dynamic_cast<BrokenBrick*>(e->obj);
 					if (GetState() == KOOPA_RED_STATE_DIE_AND_MOVE || GetState() == KOOPA_RED_STATE_DIE_AND_MOVE_UP)
 					{
-						BrokenBrick* brokenbrick = dynamic_cast<BrokenBrick*>(e->obj);
+						//BrokenBrick* brokenbrick = dynamic_cast<BrokenBrick*>(e->obj);
 						//brokenbrick->isDestroyed = true;
 						brokenbrick->SetState(STATE_DESTROYED);
 						vx = -vx;
+					}
+					else if (e->ny < 0 && GetState() != KOOPA_RED_STATE_DIE_AND_MOVE && GetState() != KOOPA_RED_STATE_DIE_AND_MOVE_UP)
+					{
+						if (x <= brokenbrick->x)
+						{
+							x = brokenbrick->x;
+							SetState(KOOPA_RED_STATE_WALKING_RIGHT);
+							vx = KOOPAS_WALKING_SPEED;
+
+						}
+						else if (x >= brokenbrick->x +	24 - 1 - KOOPAS_BBOX_WIDTH)
+						{
+							x = brokenbrick->x + 24 - 1 - KOOPAS_BBOX_WIDTH;
+							SetState(KOOPA_RED_STATE_WALKING_LEFT);
+							vx = -KOOPAS_WALKING_SPEED;
+						}
 					}
 				}
 				else
@@ -424,7 +444,7 @@ void Koopa::SetState(int State)
 		break;
 	case KOOPA_RED_STATE_DIE_AND_MOVE:
 		//vx = nx * 0.1;
-		vx = Mario->nx* 0.2;
+		vx = Mario->nx* 0.3;
 		last_state = KOOPA_RED_STATE_DIE_AND_MOVE;
 		break;
 	case KOOPA_RED_STATE_REVIVE:
@@ -435,7 +455,7 @@ void Koopa::SetState(int State)
 		break;
 	case KOOPA_RED_STATE_DIE_AND_MOVE_UP:
 		last_state = KOOPA_RED_STATE_DIE_AND_MOVE_UP;
-		vx = 0.1 * nx;
+		vx = Mario->nx * 0.3;
 		break;
 	case KOOPA_RED_STATE_HOLDING:
 		last_state = KOOPA_RED_STATE_HOLDING;
@@ -475,7 +495,7 @@ void Koopa::SetState(int State)
 		break;
 	case KOOPA_GREEN_STATE_DIE_AND_MOVE_UP:
 		last_state = KOOPA_GREEN_STATE_DIE_AND_MOVE_UP;
-		vx = 0.1 * nx;
+		vx = Mario->nx * 0.3;
 		break;
 	case KOOPA_GREEN_STATE_REVIVE:
 		last_state = KOOPA_GREEN_STATE_REVIVE;

@@ -21,6 +21,7 @@
 #define OBJECT_TYPE_BRICKSTAND	15
 #define OBJECT_TYPE_P	16
 #define OBJECT_TYPE_PIPE	17
+#define OBJECT_TYPE_MUSHROOM_GREEN	18
 
 #define CAMERA_HEIGHT_1 245
 #define CAMERA_HEIGHT_2 184
@@ -32,7 +33,7 @@ PlayScene::PlayScene() : Scene()
 {
 	keyHandler = new PlayScenceKeyHandler(this);
 	LoadBaseObjects();
-	ChooseMap(STAGE_1);
+	ChooseMap(2*STAGE_1);
 	Game::GetInstance()->ResetTimer();
 	
 }
@@ -46,6 +47,11 @@ void PlayScene::LoadBaseObjects()
 		player = new Player(1900, 300);
 		DebugOut(L"[INFO] player CREATED! \n");
 	}
+	/*if (worldPlayer == NULL)
+	{
+		worldPlayer = new WorldMapMario();
+		DebugOut(L"[INFO] player CREATED! \n");
+	}*/
 	if (bullet1 == NULL)
 	{
 		bullet1 = new MarioBullet();
@@ -67,6 +73,7 @@ void PlayScene::LoadBaseObjects()
 
 void PlayScene::ChooseMap(int whatMap)
 {
+	Unload();
 	idStage = whatMap;
 	Game::GetInstance()->SetKeyHandler(this->GetKeyEventHandler());
 	int convertSimple = idStage / STAGE_1;
@@ -124,8 +131,23 @@ void PlayScene::Update(DWORD dt)
 #pragma region Camera
 	if (isHiddenArea)
 	{
-		game->SetCamPos(2050, 465);
+		//game->SetCamPos(2095, 465);
+		float cx, cy;
+		player->GetPosition(cx, cy);
+		cx -= SCREEN_WIDTH / 2;
+		if (cx > 2127 && isLight == true)
+		{
+			cx = cx - SCREEN_WIDTH / 2-23;
+			cy = 465;
+		}
+		//DebugOut(L"cx = %f", cx);
+		game->SetCamPos(cx, 465);
+		//DebugOut(L"set cam \n");
 	}
+	/*else if (idStage == 500)
+	{
+		game->SetCamPos(0, 250);
+	}*/
 	else
 	{
 		if (!player) return;
@@ -147,6 +169,7 @@ void PlayScene::Update(DWORD dt)
 
 		game->SetCamPos(cx, cy);
 	}
+	//DebugOut(L"cam x  = %f camy = %f \n", game->GetCamPosX(), game->GetCamPosY());
 #pragma endregion
 }
 
@@ -182,6 +205,7 @@ void PlayScene::PlayerTailAttackEnemy()
 				{
 					listEnemies[i]->SetState(GOOMBA_STATE_DIE_FLY);
 					goomba->make100 = true;
+					Game::GetInstance()->Score += 100;
 				}
 			}
 			else if (goomba->id_goomba == GOOMBA_RED)
@@ -190,6 +214,7 @@ void PlayScene::PlayerTailAttackEnemy()
 				{
 					listEnemies[i]->SetState(GOOMBA_RED_STATE_NO_WING_DIE_FLY);
 					goomba->make100 = true;
+					Game::GetInstance()->Score += 100;
 				}
 			}
 		}
@@ -214,6 +239,8 @@ void PlayScene::PlayerTailAttackEnemy()
 			if (tail->IsCollidingObject(venus))
 			{
 				venus->isDeath = true;
+				venus->make100 = true;
+				//Game::GetInstance()->Score += 100;
 			}
 		}
 		else if (listEnemies[i]->GetType() == EntityType::VENUSGREEN)
@@ -222,6 +249,8 @@ void PlayScene::PlayerTailAttackEnemy()
 			if (tail->IsCollidingObject(venus))
 			{
 				venus->isDeath = true;
+				venus->make100 = true;
+				//Game::GetInstance()->Score += 100;
 			}
 		}
 		else if (listEnemies[i]->GetType() == EntityType::VENUSNOFIRE)
@@ -230,6 +259,8 @@ void PlayScene::PlayerTailAttackEnemy()
 			if (tail->IsCollidingObject(venusNoFire))
 			{
 				venusNoFire->isDeath = true;
+				venusNoFire->make100 = true;
+				//Game::GetInstance()->Score += 100;
 			}
 		}
 		
@@ -242,6 +273,7 @@ void PlayScene::PlayerTailAttackEnemy()
 
 			if (tail->IsCollidingObject(brokenBrick))
 			{
+
 				if (listObjects[i]->x == 2032 && listObjects[i]->y == 368)
 				{
 					for (UINT i = 0; i < listitems.size(); i++)
@@ -252,9 +284,7 @@ void PlayScene::PlayerTailAttackEnemy()
 							ItemP* itemP = dynamic_cast<ItemP*>(listitems[i]);
 							itemP->isCollis = true;
 						}
-
 					}
-
 					return;
 				}
 				brokenBrick->SetState(STATE_DESTROYED);
@@ -325,7 +355,7 @@ void PlayScene::DarkenTheScreen()
 	rect.bottom = SCREEN_HEIGHT;
 	if (isDark)
 	{
-		DebugOut(L"isDark");
+		//DebugOut(L"isDark");
 		colorSubtrahend += 0.3;
 		alpha = floor(alpha + colorSubtrahend);
 	}
@@ -336,7 +366,8 @@ void PlayScene::DarkenTheScreen()
 	}
 	if (alpha > 255)
 	{
-
+		//game->SetCamPos(1975 , 465);
+		//DebugOut(L"set cam lan 1 ");
 		alpha = 255;
 		player->screenDim = false;
 		player->inStartOfPipe = false;
@@ -387,7 +418,7 @@ void PlayScene::DarkenTheScreen()
 		}
 		else
 		{
-			player->SetPosition(2329, 378);
+			player->SetPosition(2329, 365);
 			player->SetState(MARIO_STATE_OUT_PIPE);
 			player->isOnPipe = true;
 		}
@@ -476,8 +507,8 @@ void PlayScene::PlayerTouchItem()
 				{
 					player->SetLevel(MARIO_LEVEL_BIG);
 					player->y -= 13;
-					mush->make100 = true;
-					Game::GetInstance()->Score += 100;
+					mush->make1000 = true;
+					Game::GetInstance()->Score += 1000;
 					isCheckMushroom = true;
 				}
 				
@@ -488,8 +519,12 @@ void PlayScene::PlayerTouchItem()
 			if (player->IsCollidingObject(listitems[i]))
 			{
 				Money* money = dynamic_cast<Money*>(listitems[i]);
-				if (money->isOnTop == false)
+				if (money->isOnTop == false) {
 					listitems[i]->SetState(MONEY_STATE_WALKING);
+					money->make100 = true;
+					Game::GetInstance()->Score += 100;
+				}
+				
 			}
 		}
 		if (listitems[i]->GetType() == EntityType::COIN)
@@ -564,7 +599,7 @@ void PlayScene::PlayerTouchItem()
 											Entity* obj = NULL;
 											obj = new Coin(x, y);
 											obj->SetPosition(x, y);
-											LPANIMATION_SET ani_set = animation_sets->Get(16);
+											LPANIMATION_SET ani_set = animation_sets->Get(23);
 
 											obj->SetAnimationSet(ani_set);
 											obj->detailTag = COINBRICK;
@@ -631,8 +666,8 @@ void PlayScene::PlayerTouchItem()
 				{
 					player->SetLevel(MARIO_LEVEL_RACCOON);
 					leaf->isDeath = true;
-					leaf->make100 = true;
-					Game::GetInstance()->Score += 100;
+					leaf->make1000 = true;
+					Game::GetInstance()->Score += 1000;
 				}
 			}
 		}
@@ -759,6 +794,9 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_Z:
 		player->isAttack = true;
 		break;
+	case DIK_J:
+		playScene->ChooseMap(1000);
+		break;
 	case DIK_V:
 		if (player->level != MARIO_LEVEL_SMALL)
 			player->y += (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT);
@@ -796,7 +834,6 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		}
 		else if (player->level == MARIO_LEVEL_RACCOON)
 		{
-			//playScene->tail->Attack(x - 8, y + 19);
 			playScene->tail->Attack();
 		}
 		break;
@@ -1133,6 +1170,17 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 
 		DebugOut(L"[INFO] Player object created!\n");
 		break;
+	//case 9999:
+	//	if (worldPlayer != NULL)
+	//	{
+	//		DebugOut(L"[ERROR] MARIO object was created before!\n");
+	//		return;
+	//	}
+	//	obj = new Player(x, y);
+	//	player = (Player*)obj;
+
+	//	DebugOut(L"[INFO] Player object created!\n");
+	//	break;
 	case OBJECT_TYPE_BRICK:
 	{
 		obj = new Brick(atof(tokens[4].c_str()),atof(tokens[5].c_str()));
@@ -1248,6 +1296,16 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		break;
 	}
 	case OBJECT_TYPE_MUSHROOM:
+	{
+		obj = new Mushroom(x, y);
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+
+		obj->SetAnimationSet(ani_set);
+		listitems.push_back(obj);
+		DebugOut(L"[test] add mushroom !\n");
+		break;
+	}
+	case OBJECT_TYPE_MUSHROOM_GREEN:
 	{
 		obj = new Mushroom(x, y);
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
@@ -1484,8 +1542,10 @@ void PlayScene::Unload()
 
 void PlayScene::Render()
 {
-
-	tilemap->Draw();
+	/*if (idStage == 500)
+		tilemap->Draw(0, 220);
+	else*/
+	tilemap->Draw(0, 0);
 	for (int i = 0; i < listObjects.size(); i++)
 		listObjects[i]->Render();
 	for (int i = 0; i < listitems.size(); i++)
@@ -1496,14 +1556,19 @@ void PlayScene::Render()
 		listEnemies[i]->Render();
 	for (int i = 0; i < listCoins.size(); i++)
 		listCoins[i]->Render();
+	
+	/*if (idStage == 500)
+		worldPlayer->Render();
+	else
+		player->Render();*/
 	player->Render();
 	//supBullet->Render();
 	for (int i = 0; i < listBullets.size(); i++)
 		listBullets[i]->Render();
 	tail->Render();
-	gameHUD->Draw();
 	for (int i = 0; i < listPipe.size(); i++)
 		listPipe[i]->Render();
+	gameHUD->Draw();
 	DarkenTheScreen();
 }
 

@@ -73,6 +73,7 @@ RaccoonTail::~RaccoonTail()
 {
 }
 
+
 void RaccoonTail::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	if (isAttack)
@@ -84,10 +85,11 @@ void RaccoonTail::GetBoundingBox(float& left, float& top, float& right, float& b
 	}
 	else
 	{
-		left = 0;
+		/*left = 0;
 		top = 0;
 		right = 0;
-		bottom = 0;
+		bottom = 0;*/
+		return;
 	}
 }
 

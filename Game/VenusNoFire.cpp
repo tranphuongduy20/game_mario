@@ -1,5 +1,6 @@
 #include "VenusNoFire.h"
 #include "debug.h"
+#include "Point.h"
 
 
 VenusNoFire::VenusNoFire(Player* mario)
@@ -8,8 +9,13 @@ VenusNoFire::VenusNoFire(Player* mario)
 }
 void VenusNoFire::Render()
 {
+	
 	if (isDoneDeath)
 		return;
+	for (int i = 0; i < listEffect.size(); i++)
+	{
+		listEffect[i]->Render();
+	}
 	if (isDeath)
 	{
 		animationSet->at(VENUS_STATE_DIE)->Render(nx, x, y);
@@ -22,7 +28,7 @@ void VenusNoFire::Render()
 	if (isdone)
 		animationSet->at(17)->Render(nx, x, y);
 	animationSet->at(state)->Render(nx, x, y);
-
+	
 	RenderBoundingBox();
 }
 
@@ -60,6 +66,14 @@ void VenusNoFire::GetBoundingBox(float& left, float& top, float& right, float& b
 
 void VenusNoFire::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 {
+	if (make100)
+	{
+		Point* point = new Point();
+		point->SetPosition(x, y);
+		point->SetState(MAKE_100);
+		make100 = false;
+		listEffect.push_back(point);
+	}
 	if (isDeath)
 		return;
 	Entity::Update(dt, coObjects);
@@ -102,6 +116,10 @@ void VenusNoFire::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 	if (y <= 361)
 	{
 		y = 361;
+	}
+	for (int i = 0; i < listEffect.size(); i++)
+	{
+		listEffect[i]->Update(dt, coObjects);
 	}
 }
 

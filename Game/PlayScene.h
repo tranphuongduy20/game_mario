@@ -11,7 +11,6 @@
 #include "Camera.h"
 #include "Item.h"
 #include "Player.h"
-//#include "HUD.h"
 #include "Brick.h"
 #include "CBrick.h"
 #include "BrickStand.h"
@@ -28,16 +27,9 @@
 #include "RaccoonTail.h"
 #include "P.h"
 #include "Pipe.h"
-//#include "PowerUp.h"
-//#include "GunUp.h"
-
-//#include "Centipede.h"
-//#include "Golem.h"
-//#include "Gunner.h"
-//#include "Domes.h"
+//#include "WorldMapMario.h"
 
 #include "MarioBullet.h"
-//#include "ElectricBullet.h"
 
 
 #include <iostream>
@@ -53,6 +45,7 @@ public:
 
 protected:
 	TileMap* tilemap;
+	//WorldMapMario* worldPlayer;
 	Player* player;
 	HUD* gameHUD;
 	Bullet* bullet1;

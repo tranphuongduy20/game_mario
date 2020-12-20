@@ -8,6 +8,7 @@
 #include "SceneManager.h"
 //Bat cai nay de test nhanh
 #include "PlayScene.h"
+#include "WorldScene.h"
 
 Game* game;
 
@@ -153,7 +154,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//Test nhanh
 	SceneManager::GetInstance()->SetScene(new PlayScene());
 	//SceneManager::GetInstance()->SetScene(new TitleScene());
-	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2.5, SCREEN_HEIGHT * 2.5, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 	GameLoop();
 
 	return 0;
