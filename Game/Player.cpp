@@ -14,6 +14,11 @@
 #include "Coin.h"
 #include "Venus.h"
 #include "VenusNoFire.h"
+#include "Money.h"
+#include "SceneManager.h"
+#include "PlayScene.h"
+
+//class PlayScene;
 
 using namespace std;
 
@@ -149,7 +154,7 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 	coEvents.clear();
-	isWaittingPressBtn = GetTickCount() - startWalkingComplete <= MARIO_TYPE;
+	isWaittingPressBtn = GetTickCount64() - startWalkingComplete <= MARIO_TYPE;
 	if (isWaittingPressBtn) {
 		//DebugOut(L"\n true - %d", GetTickCount() - startWalkingComplete);
 	}
@@ -166,7 +171,7 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 		isWalkingComplete = false;
 
 	// reset untouchable timer if untouchable time has passed
-	if (GetTickCount() - untouchable_start > MARIO_UNTOUCHABLE_TIME)
+	if (GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME)
 	{
 		untouchable_start = 0;
 		untouchable = 0;
@@ -279,6 +284,17 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 				if (e->ny > 0)
 				{
 					brick->SetState(CBRICK_STATE_COLLISION);
+					
+					//LPGAMEENTITY money = new Money(e->obj->x, e->obj->y - 20);
+					/////*if (money->isOnTop == false) {*/
+					//money->SetState(MONEY_STATE_WALKING);
+					//money->make100 = true;
+					//auto scene = dynamic_cast<PlayScene*>(SceneManager::GetInstance()->GetScene());
+					//if (!scene)	return;
+					//scene->AddObject(money);
+					////money->Render();
+					//Game::GetInstance()->Score += 100;
+					////}
 				}
 			}
 			else if (e->obj->GetType() == EntityType::BRICKSTAND)

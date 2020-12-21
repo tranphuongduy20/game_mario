@@ -1,78 +1,90 @@
 # id	file_path	transparent_color_r	g	b
 [TEXTURES]
-0	Resources\Textures\UI\ui.png	255	127	39
-1	Resources\Textures\World\overworld-maps.png	166	185	255
+1	Resources\Textures\Item\misc.png	176	224	248
+5	Resources\Textures\Title\ui.png	255	127	39
+10	Resources\Textures\Enemy\enemies1.png	3	26	100
+20	Resources\Textures\Item\misc1.png	255	255	255
+21	Resources\Textures\Item\misc-2.png	255	255	255
+30	Resources\Textures\Enemy\enemy.png	255	255	255
+40	Resources\Textures\Enemy\enemies.png	255	255	255
+50	Resources\Textures\Enemy\enemies_custom_2.png	255	255	255
+51	Resources\Textures\Enemy\enemies_custom.png	255	255	255
+45	Resources\Textures\Enemy\enemies-5.png	0	255	255
+46	Resources\Textures\Enemy\enemies-5_1.png	0	255	255
+47	Resources\Textures\Item\effect.png	176	224	248
+48	Resources\Textures\World\overworld-maps.png	166	185	255
 
 # id	left	top	width	height	texture_id
 [SPRITES]
-#----------------- HUD ------------------
-
-#[NUMBER + FONT]
-0	77	31	8	7	0
-1	87	31	8	7	0
-2	97	31	8	7	0
-3	107	31	8	7	0
-4	117	31	8	7	0
-5	127	31	8	7	0
-6	137	31	8	7	0
-7	147	31	8	7	0
-8	157	31	8	7	0
-9	167	31	8	7	0
-
-#[main card]
-50	12	128	152	29	0
-
-#[item card]
-#empty card
-51	160	159	24	28	0
-#mushroom card
-52
-#flower card
-53
-#star card
-54
-#mario tag
-55	16	161	16	7	0
-#luigi tag
-56	16	171	16	7	0
-#bar segment unfill
-57	91	162	8	7	0
-#bar segment fill
-58	64	162	8	7	0
-#p unfill
-59	100	162	15	7	0
-#p fill
-60	73	162	15	7	0
-
 #------------------ MARIO -----------------------
 #[small]
-1000	252	116	14	16	1
-1001	272	116	14	16	1
+1000	252	116	14	16	48
+1001	272	116	14	16	48
 #[big]
-1002	192	116	16	21	1
-1003	312	116	16	21	1
+1002	192	116	16	21	48
+1003	312	116	16	21	48
 #[raccoon]
-1004	333	113	16	24	1
-1005	354	113	16	24	1
+1004	333	113	16	24	48
+1005	354	113	16	24	48
 #[raccoon P]
-1006	375	113	16	24	1
-1007	396	113	16	24	1
+1006	375	113	16	24	48
+1007	396	113	16	24	48
 #[big fire]
-1008	333	168	16	21	1
-1009	354	168	16	21	1
+1008	333	168	16	21	48
+1009	354	168	16	21	48
 
 # ----------------- DECORATION ------------------
 #[Cactus]
-2000	252	14	16	16	1
-2001	272	14	16	16	1
-2002	292	14	16	16	1
+2000	252	14	16	16	48
+2001	272	14	16	16	48
+2002	292	14	16	16	48
 
 #[Hammer Brother]
-3000	333	74	16	16	1
-3001	354	74	16	16	1
+3000	333	74	16	16	48
+3001	354	74	16	16	48
 
 #[Speech Bubble]
-4000	431	133	16	14	1
+4000	431	133	16	14	48
+
+
+#----------------- HUD ------------------
+
+#[NUMBER + FONT]
+0	77	31	8	7	5
+1	87	31	8	7	5
+2	97	31	8	7	5
+3	107	31	8	7	5
+4	117	31	8	7	5
+5	127	31	8	7	5
+6	137	31	8	7	5
+7	147	31	8	7	5
+8	157	31	8	7	5
+9	167	31	8	7	5
+
+#[main card]
+20	12	128	152	29	5
+
+#[item card]
+#empty card
+21	160	159	24	28	5
+#mushroom card
+22
+#flower card
+23
+#star card
+24
+#mario tag
+25	16	161	16	7	5
+#luigi tag
+26	16	171	16	7	5
+#bar segment unfill
+27	91	162	8	7	5
+#bar segment fill
+28	64	162	8	7	5
+#p unfill
+29	100	162	15	7	5
+#p fill
+30	73	162	15	7	5
 
 
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
@@ -103,7 +115,7 @@
 #
 [ANIMATION_SETS]
 # MARIO
-1	100	101	102	103	104
+5	100	101	102	103	104
 # CACTUS
 2	200
 # HAMMER BROTHER
@@ -113,76 +125,71 @@
 
 [OBJECTS]
 # type	x	y	ani_set_id	extra_settings per object type
-# type: 0 = Mario , 1 = Cactus , 2 = Hammer Brother , 3 = Speech Bubble
 
 # CACTUS
-1	16	28	2
-1	32	28	2
-1	48	28	2
-1	16	44	2
-1	32	44	2
-1	48	44	2
+30	16	267	2
+30	32	267	2
+30	48	267	2
+30	16	283	2
+30	32	283	2
+30	48	283	2
 
-1	16	76	2
-1	32	76	2
-1	48	76	2
-1	16	92	2
-1	32	92	2
-1	48	92	2
-1	16	108	2
+30	16	316	2
+30	32	316	2
+30	48	316	2
+30	16	332	2
+30	32	332	2
+30	48	332	2
+30	16	348	2
 
-1	80	44	2
-1	96	44	2
-1	112	44	2
-1	80	60	2
-1	96	60	2
-1	112	60	2
-1	80	76	2
-1	96	76	2
-1	112	76	2
+30	80	283	2
+30	96	283	2
+30	112	283	2
+30	80	299	2
+30	96	299	2
+30	112	299	2
+30	80	315	2
+30	96	315	2
+30	112	315	2
 
-1	144	44	2
-1	160	44	2
-1	176	44	2
+30	144	283	2
+30	160	283	2
+30	176	283	2
 
-1	96	108	2
-1	112	108	2
-1	128	108	2
+30	96	348	2
+30	112	348	2
+30	128	348	2
 
-1	144	76	2
-1	160	76	2
-1	176	76	2
-1	192	76	2
-1	144	92	2
-1	160	92	2
+30	144	315	2
+30	160	315	2
+30	176	315	2
+30	192	315	2
+30	144	332	2
+30	160	332	2
 
-1	208	28	2
-1	224	28	2
-1	208	44	2
-1	224	44	2
-1	208	60	2
-1	224	60	2
-1	208	76	2
-1	224	76	2
+30	208	267	2
+30	224	267	2
+30	208	283	2
+30	224	283	2
+30	208	299	2
+30	224	299	2
+30	208	315	2
+30	224	315	2
 
-1	224	92	2
-1	224	108	2
-1	224	124	2
-1	224	140	2
-1	224	156	2
+30	224	332	2
+30	224	348	2
+30	224	364	2
+30	224	380	2
+30	224	396	2
 
 #HAMMER BROTHER
-2	128	124	3
+32	128	363	3
 
 #SPEECH BUBBLE
-3	208	108	4
+33	208	348	4
 
 # MARIO
-0	33	60	1
-
-[GRID]
-#file 
-#textures/World/map-grid.txt
+31	32	298	5
 
 [TILEMAP]
 #tile id	file_texture	file_path	num row on tex	num col on tex	num row on tilemap	num col tilemap	tile size

@@ -2,6 +2,10 @@
 #include "Textures.h"
 #include "Point.h"
 #include "Game.h"
+#include "Cactus.h"
+#include "WorldMapMario.h"
+#include "HammerBrother.h"
+#include "SpeechBubble.h"
 
 #define OBJECT_TYPE_MARIO		0
 #define OBJECT_TYPE_BRICK		1
@@ -22,6 +26,10 @@
 #define OBJECT_TYPE_P	16
 #define OBJECT_TYPE_PIPE	17
 #define OBJECT_TYPE_MUSHROOM_GREEN	18
+#define OBJECT_TYPE_CACTUS			30
+#define	OBJECT_TYPE_MARIO_WORLDMAP	31
+#define	OBJECT_TYPE_HAMMER_BROTHER	32
+#define	OBJECT_TYPE_MSPEECH_BUBBLE	33
 
 #define CAMERA_HEIGHT_1 245
 #define CAMERA_HEIGHT_2 184
@@ -33,7 +41,7 @@ PlayScene::PlayScene() : Scene()
 {
 	keyHandler = new PlayScenceKeyHandler(this);
 	LoadBaseObjects();
-	ChooseMap(2*STAGE_1);
+	ChooseMap(STAGE_1);
 	Game::GetInstance()->ResetTimer();
 	
 }
@@ -144,10 +152,10 @@ void PlayScene::Update(DWORD dt)
 		game->SetCamPos(cx, 465);
 		//DebugOut(L"set cam \n");
 	}
-	/*else if (idStage == 500)
+	else if (idStage == 500)
 	{
 		game->SetCamPos(0, 250);
-	}*/
+	}
 	else
 	{
 		if (!player) return;
@@ -489,6 +497,11 @@ bool PlayScene::PlayerPassingStage(float DistanceXWant, int directionGo)
 		}
 	return true;
 }
+
+//void PlayScene::AddObject(LPGAMEENTITY obj) {
+//	listitems.push_back(obj);
+//	int a = 0;
+//}
 
 void PlayScene::PlayerTouchItem()
 {
@@ -1005,7 +1018,10 @@ void PlayScene::_ParseSection_TEXTURES(string line)
 	int G = atoi(tokens[3].c_str());
 	int B = atoi(tokens[4].c_str());
 
+
+
 	CTextures::GetInstance()->Add(texID, path.c_str(), D3DCOLOR_XRGB(R, G, B));
+	//DebugOut(L"[INFO] Add Texture \n");
 }
 
 void PlayScene::_ParseSection_CLEARTEXTURES(string line)
@@ -1357,6 +1373,42 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		listPipe.push_back(obj);
 		break;
 	}
+	case OBJECT_TYPE_CACTUS:
+	{
+		obj = new Cactus();
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+		obj->SetAnimationSet(ani_set);
+		obj->SetPosition(x, y);
+		listObjects.push_back(obj);
+		break;
+	}
+	case OBJECT_TYPE_MARIO_WORLDMAP:
+	{
+		obj = new WorldMapMario();
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+		obj->SetAnimationSet(ani_set);
+		obj->SetPosition(x, y);
+		listObjects.push_back(obj);
+		break;
+	}
+	case OBJECT_TYPE_HAMMER_BROTHER:
+	{
+		obj = new HammerBrother(x, y);
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+		obj->SetAnimationSet(ani_set);
+		obj->SetPosition(x, y);
+		listObjects.push_back(obj);
+		break;
+	}
+	case OBJECT_TYPE_MSPEECH_BUBBLE:
+	{
+		obj = new SpeechBubble();
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+		obj->SetAnimationSet(ani_set);
+		obj->SetPosition(x, y);
+		listObjects.push_back(obj);
+		break;
+	}
 	case OBJECT_TYPE_GATE:
 	{
 		int switchId = atoi(tokens[3].c_str());
@@ -1542,10 +1594,10 @@ void PlayScene::Unload()
 
 void PlayScene::Render()
 {
-	/*if (idStage == 500)
+	if (idStage == 500)
 		tilemap->Draw(0, 220);
-	else*/
-	tilemap->Draw(0, 0);
+	else
+		tilemap->Draw(0, 0);
 	for (int i = 0; i < listObjects.size(); i++)
 		listObjects[i]->Render();
 	for (int i = 0; i < listitems.size(); i++)

@@ -96,6 +96,7 @@ public:
 	bool PlayerPassingStage(float DistanceXWant, int directionGo);
 	void PlayerGotGate();
 	void PlayerTouchItem();
+	/*void AddObject(LPGAMEENTITY);*/
 	void PlayerCollideItem();
 	void BoundaryConstraint(float &x, float &y);
 	void PlayerTailAttackEnemy();

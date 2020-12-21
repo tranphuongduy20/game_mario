@@ -15,11 +15,11 @@ class Money : public Entity
 {
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEENTITY>* coObjects);
-	virtual void Render();
 
 public:
 	DWORD timeDelay;
 	vector <LPGAMEENTITY> listEffect;
+	virtual void Render();
 	int alpha;
 	float oldY;
 	bool isDone;

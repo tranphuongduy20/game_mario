@@ -193,9 +193,9 @@ void Goomba::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 							vx = GOOMBA_WALKING_SPEED;
 
 						}
-						else if (x >= brick->x + brick->frameW)
+						else if (x >= brick->x + brick->frameW - 1 - GOOMBA_BBOX_WIDTH)
 						{
-							x = brick->x + brick->frameW;
+							x = brick->x + brick->frameW - 1 - GOOMBA_BBOX_WIDTH;
 							SetState(GOOMBA_STATE_WALKING);
 							vx = -GOOMBA_WALKING_SPEED;
 						}

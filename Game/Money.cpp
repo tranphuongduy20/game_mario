@@ -61,14 +61,6 @@ void Money::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 		if (vx == 0)
 			vx = -MONEY_WALKING_SPEED;
 	}*/
-	if (make100)
-	{
-		Point* point = new Point();
-		point->SetPosition(x, y);
-		point->SetState(MAKE_100);
-		make100 = false;
-		listEffect.push_back(point);
-	}
 	if (isCollis == true && isStart == false)
 	{
 		timeDelay += dt;
