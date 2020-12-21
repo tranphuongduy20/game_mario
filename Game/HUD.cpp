@@ -138,8 +138,10 @@ void HUD::DrawSpeedBar()
 	for (int i = 0; i < 6; i++)
 	{
 		auto barSegment = sprites->Get(27);
-		//barSegment->Draw(1, cam_x + 10 + 51 + i * 8, cam_y + 184 + 4 + 6);
+		barSegment->Draw(1, cam_x + 10 + 51 + i * 8, cam_y + 184 + 4 + 6);
 	}
+	auto p = sprites->Get(29);
+	p->Draw(1, cam_x + 10 + 99, cam_y + 184 + 4 + 6);
 
 	PlayScene* currentScene = dynamic_cast<PlayScene*>(SceneManager::GetInstance()->GetScene());
 	if (currentScene) {
@@ -147,7 +149,7 @@ void HUD::DrawSpeedBar()
 		if (player->GetIsRun() == false)	return;
 		int speedLevel = player->GetSpeedLevel();
 
-		auto barSegment = sprites->Get(27);
+		auto barSegment = sprites->Get(28);
 		for (int i = 0; i < 6; i++)
 		{
 			if (i <= speedLevel) {
@@ -155,7 +157,7 @@ void HUD::DrawSpeedBar()
 			}
 		}
 
-		auto p = sprites->Get(29);
+		auto p = sprites->Get(30);
 		p->Draw(1, cam_x + 10 + 99, cam_y + 184 + 4 + 6);
 	}
 }
