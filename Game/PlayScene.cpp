@@ -43,9 +43,8 @@ PlayScene::PlayScene() : Scene()
 {
 	keyHandler = new PlayScenceKeyHandler(this);
 	LoadBaseObjects();
-	ChooseMap(STAGE_1);
+	ChooseMap(2*STAGE_1);
 	Game::GetInstance()->ResetTimer();
-	
 }
 
 void PlayScene::LoadBaseObjects()
@@ -91,6 +90,17 @@ void PlayScene::ChooseMap(int whatMap)
 	LoadSceneObjects();
 }
 
+bool PlayScene::IsOutSideCamera(LPGAMEENTITY entity) {
+	Game* game = Game::GetInstance();
+	if (entity->x > game->GetCamPosX() - SCREEN_WIDTH / 2 && entity->x < game->GetCamPosX() + SCREEN_WIDTH * 3 / 2
+		&& entity->y > game->GetCamPosY() - SCREEN_HEIGHT / 2 && entity->y < game->GetCamPosY() + SCREEN_HEIGHT * 3 / 2)	return false;
+	return true;
+}
+
+void PlayScene::DisableEntityOutsideCamera(LPGAMEENTITY entity) {
+	entity->isEnabled = IsOutSideCamera(entity) ? false : true;
+}
+
 void PlayScene::Update(DWORD dt)
 {
 	Game* game = Game::GetInstance();
@@ -107,34 +117,41 @@ void PlayScene::Update(DWORD dt)
 	vector<LPGAMEENTITY> fullObjects;
 	vector<LPGAMEENTITY> enemies;
 	vector<LPGAMEENTITY> coObjects2;
+
+
+
 	for (int i = 0; i < listObjects.size(); i++)
 	{
+		DisableEntityOutsideCamera(listObjects.at(i));
 		coObjects.push_back(listObjects[i]);
 		fullObjects.push_back(listObjects[i]);
 	}
 	for (int i = 0; i < listEnemies.size(); i++)
 	{
+		DisableEntityOutsideCamera(listEnemies.at(i));
 		fullObjects.push_back(listEnemies[i]);
 		enemies.push_back(listEnemies[i]);
 	}
+
+
 	player->Update(dt, &fullObjects);
 	for (int i = 0; i < listBullets.size(); i++)
-		listBullets[i]->Update(dt, &fullObjects);
+		if(listBullets.at(i)->isEnabled) listBullets[i]->Update(dt, &fullObjects);
 	for (int i = 0; i < listEnemies.size(); i++)
-		listEnemies[i]->Update(dt, &coObjects);
+		if (listEnemies.at(i)->isEnabled) listEnemies[i]->Update(dt, &coObjects);
 	for (int i = 0; i < listObjects.size(); i++)
 	{
 		if (dynamic_cast<Brick*>(listObjects[i]))
 		{ }
 		else
-			listObjects[i]->Update(dt, &fullObjects);
+			if (listObjects.at(i)->isEnabled) listObjects[i]->Update(dt, &fullObjects);
 	}
 	for (int i = 0; i < listLeaf.size(); i++)
-		listLeaf[i]->Update(dt, &coObjects2);
+		if (listLeaf.at(i)->isEnabled) listLeaf[i]->Update(dt, &coObjects2);
 	for (int i = 0; i < listCoins.size(); i++)
-		listCoins[i]->Update(dt, &coObjects2);
+		if (listCoins.at(i)->isEnabled) listCoins[i]->Update(dt, &coObjects2);
 	for (int i = 0; i < listitems.size(); i++)
-		listitems[i]->Update(dt, &coObjects);
+		if (listitems.at(i)->isEnabled) listitems[i]->Update(dt, &coObjects);
 	tail->Update(dt, &fullObjects, player->x, player->y);
 #pragma endregion
 
@@ -246,21 +263,23 @@ void PlayScene::PlayerTailAttackEnemy()
 		else if (listEnemies[i]->GetType() == EntityType::VENUS)
 		{
 			Venus* venus = dynamic_cast<Venus*>(listEnemies[i]);
+			if (venus->isDeath) return;
 			if (tail->IsCollidingObject(venus))
 			{
 				venus->isDeath = true;
 				venus->make100 = true;
-				//Game::GetInstance()->Score += 100;
+				Game::GetInstance()->Score += 100;
 			}
 		}
 		else if (listEnemies[i]->GetType() == EntityType::VENUSGREEN)
 		{
 			Venus* venus = dynamic_cast<Venus*>(listEnemies[i]);
+			if (venus->isDeath) return;
 			if (tail->IsCollidingObject(venus))
 			{
 				venus->isDeath = true;
 				venus->make100 = true;
-				//Game::GetInstance()->Score += 100;
+				Game::GetInstance()->Score += 100;
 			}
 		}
 		else if (listEnemies[i]->GetType() == EntityType::VENUSNOFIRE)
@@ -534,9 +553,10 @@ void PlayScene::PlayerTouchItem()
 			if (player->IsCollidingObject(listitems[i]))
 			{
 				Money* money = dynamic_cast<Money*>(listitems[i]);
-				if (money->isOnTop == false) {
+				if (money->isOnTop == false && !money->isEmpty) {
 					listitems[i]->SetState(MONEY_STATE_WALKING);
 					money->make100 = true;
+					money->isEmpty = true;
 					Game::GetInstance()->Score += 100;
 				}
 				

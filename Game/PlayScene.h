@@ -93,6 +93,8 @@ public:
 
 	void LoadBaseObjects();
 	void LoadBaseTextures();
+	bool IsOutSideCamera(LPGAMEENTITY);
+	void DisableEntityOutsideCamera(LPGAMEENTITY);
 	void ChooseMap(int whatStage);
 	bool PlayerPassingStage(float DistanceXWant, int directionGo);
 	void PlayerGotGate();

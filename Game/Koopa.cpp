@@ -220,7 +220,7 @@ void Koopa::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 
 		// block every object first!
 
-		//x += min_tx * dx + nx * 0.5f;
+		x += min_tx * dx + nx * 0.5f;
 		y += min_ty * dy + ny * 0.1f;
 
 		if (ny != 0)
@@ -261,20 +261,19 @@ void Koopa::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 						}
 					}
 				}
-				//else if (dynamic_cast<Goomba*>(e->obj))
-				//{
-				//	Goomba* goomba = dynamic_cast<Goomba*>(e->obj);
-				//	if (GetState() == KOOPA_RED_STATE_DIE_AND_MOVE || GetState() == KOOPA_RED_STATE_DIE_AND_MOVE_UP)
-				//	{
-				//		//auto goomba = dynamic_cast<Goomba*>(listEnemies[i]);
-				//		if (goomba->id_goomba == GOOMBA_NORMAL)
-				//		{
-				//			listEnemies[i]->SetState(GOOMBA_STATE_DIE_FLY);
-				//			goomba->make100 = true;
-				//			Game::GetInstance()->Score += 100;
-				//		}
-				//	}
-				//}
+				else if (dynamic_cast<Goomba*>(e->obj))
+				{
+					Goomba* goomba = dynamic_cast<Goomba*>(e->obj);
+					if (GetState() == KOOPA_RED_STATE_DIE_AND_MOVE || GetState() == KOOPA_RED_STATE_DIE_AND_MOVE_UP)
+					{
+						if (goomba->id_goomba == GOOMBA_NORMAL)
+						{
+							listEnemies[i]->SetState(GOOMBA_STATE_DIE_FLY);
+							goomba->make100 = true;
+							Game::GetInstance()->Score += 100;
+						}
+					}
+				}
 				else if (dynamic_cast<BrokenBrick*>(e->obj))
 				{
 					BrokenBrick* brokenbrick = dynamic_cast<BrokenBrick*>(e->obj);

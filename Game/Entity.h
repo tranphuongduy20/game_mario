@@ -85,9 +85,10 @@ public:
 
 	DWORD dt;
 	EntityType tag;
-	LPANIMATION_SET animationSet;
+	LPANIMATION_SET animationSet; 
 
 public:
+	bool isEnabled;
 	bool CheckAABB(float l_a, float t_a, float r_a, float b_a, float l_b, float t_b, float r_b, float b_b)
 	{
 		return (l_a < r_b && r_a > l_b && t_a < b_b && b_a > t_b);
@@ -113,7 +114,6 @@ public:
 	void RenderBoundingBox();
 	void SetBBARGB(int x) { bbARGB = x; }
 	int GetBBARGB() { return bbARGB; }
-
 
 	void SetAnimationSet(LPANIMATION_SET ani_set) { animationSet = ani_set; }
 

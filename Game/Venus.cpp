@@ -1,6 +1,7 @@
 #include "Venus.h"
 #include "VenusBullet.h"
 #include "Point.h"
+#include "Game.h"
 
 Venus::Venus(Player* mario, int piranhaType)
 {
@@ -10,7 +11,7 @@ Venus::Venus(Player* mario, int piranhaType)
 		tag = EntityType::VENUSGREEN;
 	player = mario;
 	this->piranhaType = piranhaType;
-
+	make100 = false;
 	SetAreaLimit();
 	SetState(FIRE_PIRANHA_STATE_MOVE_UP);
 }

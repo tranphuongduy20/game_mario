@@ -12,6 +12,7 @@ Money::Money(float posX, float posY)
 	timeDelay = 0;
 	isDone = false;
 	isOnTop = false;
+	isEmpty = false;
 }
 
 void Money::GetBoundingBox(float& left, float& top, float& right, float& bottom)

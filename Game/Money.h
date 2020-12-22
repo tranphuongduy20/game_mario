@@ -24,6 +24,7 @@ public:
 	float oldY;
 	bool isDone;
 	bool isCollis;
+	bool isEmpty;
 	bool isOnTop = false;
 	bool isStart = false;
 	Money(float posX, float posY);
