@@ -157,6 +157,9 @@
     <ClCompile Include="Cactus.cpp">
       <Filter>Header Files\GameSource\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Title.cpp">
+      <Filter>Header Files\GameSource\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h">
@@ -313,6 +316,9 @@
       <Filter>Header Files\GameSource\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Cactus.h">
+      <Filter>Header Files\GameSource\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Title.h">
       <Filter>Header Files\GameSource\Scene</Filter>
     </ClInclude>
   </ItemGroup>

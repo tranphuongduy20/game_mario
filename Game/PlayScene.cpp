@@ -6,6 +6,7 @@
 #include "WorldMapMario.h"
 #include "HammerBrother.h"
 #include "SpeechBubble.h"
+#include "Title.h"
 
 #define OBJECT_TYPE_MARIO		0
 #define OBJECT_TYPE_BRICK		1
@@ -30,6 +31,7 @@
 #define	OBJECT_TYPE_MARIO_WORLDMAP	31
 #define	OBJECT_TYPE_HAMMER_BROTHER	32
 #define	OBJECT_TYPE_MSPEECH_BUBBLE	33
+#define OBJECT_TYPE_TITLE			43
 
 #define CAMERA_HEIGHT_1 245
 #define CAMERA_HEIGHT_2 184
@@ -1409,6 +1411,15 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		listObjects.push_back(obj);
 		break;
 	}
+	case OBJECT_TYPE_TITLE:
+	{
+		obj = new Title();
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+		obj->SetAnimationSet(ani_set);
+		obj->SetPosition(x, y);
+		listObjects.push_back(obj);
+		break;
+	}
 	case OBJECT_TYPE_GATE:
 	{
 		int switchId = atoi(tokens[3].c_str());
@@ -1598,6 +1609,8 @@ void PlayScene::Render()
 		tilemap->Draw(0, 220);
 	else
 		tilemap->Draw(0, 0);
+	//DrawBackground();
+	//DrawOptions();
 	for (int i = 0; i < listObjects.size(); i++)
 		listObjects[i]->Render();
 	for (int i = 0; i < listitems.size(); i++)
@@ -1622,5 +1635,21 @@ void PlayScene::Render()
 		listPipe[i]->Render();
 	gameHUD->Draw();
 	DarkenTheScreen();
+}
+
+void PlayScene::DrawBackground()
+{
+	auto sprites = CSprites::GetInstance();
+
+	auto bg = sprites->Get(0);
+	bg->Draw(1, 0, 1);
+}
+
+void PlayScene::DrawOptions()
+{
+	auto sprites = CSprites::GetInstance();
+
+	auto option = curOption == 0 ? sprites->Get(4000) : sprites->Get(4001);
+	option->Draw(1, 72, 146);
 }
 

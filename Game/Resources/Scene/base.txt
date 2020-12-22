@@ -350,5 +350,6 @@
 #0	2050	365	1
 [SCENE]
 #Stage1
+#Resources/Scene/start_scene.txt	176	64
 Resources/Scene/world_select_scene.txt	176	64
 Resources/Scene/scene1.txt	2816	656

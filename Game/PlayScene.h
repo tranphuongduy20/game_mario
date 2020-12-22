@@ -54,6 +54,7 @@ protected:
 	DWORD countP = 0;
 	bool isCheckLoadCoin = false;
 	bool isCheckMushroom = false;
+	int curOption = 0;
 	//Bullet* bullet3;
 	//Bullet* supBullet;
 	//PowerUp* powerUp;
@@ -107,6 +108,8 @@ public:
 	Player* GetPlayer() { return player; }
 	void DarkenTheScreen();
 	void LightTheScreen();
+	void DrawBackground();
+	void DrawOptions();
 	double colorSubtrahend;
 	int alpha = 0;
 	bool isDark = false;
