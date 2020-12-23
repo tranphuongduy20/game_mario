@@ -153,6 +153,7 @@
     <ClInclude Include="Koopa.h" />
     <ClInclude Include="Leaf.h" />
     <ClInclude Include="Money.h" />
+    <ClInclude Include="MushGreen.h" />
     <ClInclude Include="Mushroom.h" />
     <ClInclude Include="P.h" />
     <ClInclude Include="Pipe.h" />
@@ -208,6 +209,7 @@
     <ClCompile Include="Leaf.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Money.cpp" />
+    <ClCompile Include="MushGreen.cpp" />
     <ClCompile Include="Mushroom.cpp" />
     <ClCompile Include="P.cpp" />
     <ClCompile Include="Pipe.cpp" />

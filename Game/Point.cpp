@@ -50,5 +50,7 @@ void Point::SetState(int State)
 		break;
 	case MAKE_8000:
 		break;
+	case MAKE_UP:
+		break;
 	}
 }

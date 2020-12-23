@@ -67,6 +67,7 @@ public:
 	bool make800;
 	bool make1000;
 	bool make2000;
+	bool makeup;
 
 	bool isdone;
 	int id_goomba;

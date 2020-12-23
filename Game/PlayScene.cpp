@@ -578,6 +578,26 @@ void PlayScene::PlayerTouchItem()
 				
 			}
 		}
+		if (listitems[i]->GetType() == EntityType::MUSHGREEN)
+		{
+			if (player->IsCollidingObject(listitems[i]) && player->level == MARIO_LEVEL_RACCOON)
+			{
+				MushGreen* mushgreen = dynamic_cast<MushGreen*>(listitems[i]);
+				if (mushgreen->isOnTop == false)
+				{
+					listitems[i]->SetState(MUSHROOM_STATE_WALKING);
+				}
+				else
+				{
+					//player->SetLevel(MARIO_LEVEL_BIG);
+					player->y -= 13;
+					mushgreen->makeup = true;
+					//Game::GetInstance()->Score += 1000;
+					isCheckMushroom = true;
+				}
+
+			}
+		}
 		if (listitems[i]->GetType() == EntityType::MONEY)
 		{
 			if (player->IsCollidingObject(listitems[i]))
@@ -1525,7 +1545,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 	}
 	case OBJECT_TYPE_MUSHROOM_GREEN:
 	{
-		obj = new Mushroom(x, y);
+		obj = new MushGreen(x, y);
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);

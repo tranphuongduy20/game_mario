@@ -167,6 +167,7 @@ enum EntityType
 	ITEMAXE = 56,
 	ITEMWATERPOTION = 57,
 	PIPE = 58,
+	MUSHGREEN = 59,
 
 	//Effect Zone 70-80
 	FIREEFFECT = 70,

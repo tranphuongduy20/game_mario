@@ -18,6 +18,7 @@
 #include "Koopa.h"
 #include "Goomba.h"
 #include "Mushroom.h"
+#include "MushGreen.h"
 #include "Venus.h"
 #include "VenusNoFire.h"
 #include "Leaf.h"

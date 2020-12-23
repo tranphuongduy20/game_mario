@@ -160,6 +160,9 @@
     <ClCompile Include="Title.cpp">
       <Filter>Header Files\GameSource\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="MushGreen.cpp">
+      <Filter>Header Files\GameSource\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h">
@@ -320,6 +323,9 @@
     </ClInclude>
     <ClInclude Include="Title.h">
       <Filter>Header Files\GameSource\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="MushGreen.h">
+      <Filter>Header Files\GameSource\Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

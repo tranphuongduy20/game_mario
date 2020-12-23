@@ -9,6 +9,7 @@
 #define MAKE_2000 5
 #define MAKE_4000 6
 #define MAKE_8000 7
+#define MAKE_UP 8
 
 class Point : public Entity
 {
