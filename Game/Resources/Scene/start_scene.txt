@@ -1,7 +1,7 @@
 # id	file_path	transparent_color_r	g	b
 [TEXTURES]
 0	Resources\Textures\Title\title-screen.png	255	242	0
-1	Resources\Textures\Title\Title.png	255	255	255
+1	Resources\Textures\Title\title.png	255	255	255
 
 # id	left	top	w	h	texture_id
 

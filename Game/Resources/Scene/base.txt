@@ -10,6 +10,20 @@
 [SPRITES]
 #----------BACKGROUND-----------------
 0	782	226	256	224	3
+#----------------- CURTAIN ------------------
+1000	0	0	256	182	3
+# --------------- FLOOR ------------------
+2000	0	187	256	37	3
+# ----------- OPTIONS -------------
+4000	8	306	112	24	3
+4001	133	306	112	24	3
+
+#---------------- TITLE --------------------
+#[blink]
+3000	0	0	179	113	4
+3001	184	0	179	113	4
+3002	368	0	179	113	4
+3003	552	0	179	113	4
 
 # SMALL MARIO
 # IDLE FRONT
@@ -333,6 +347,12 @@
 #idle front raccoon
 320	10053	100
 
+# CURTAIN
+100	0	100
+
+#TITLE
+101	3000	100	3001	100	3002	100	3003	100	3002	100
+
 # ==== FIRE =========
 900	60000	100	60001	100	60002	100	60003	100
 #raccoon explosive
@@ -345,16 +365,23 @@
 #FIRE
 50	900	901
 
+# CURTAIN
+2	100
+# TITLE
+3	101
+
 [OBJECTS]
 # type	x	y	ani_set_id	extra_settings per object type
-# type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas
+# type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas, 43 = Speech Bubble
 # MARIO
 #0	2264	85	1
 0	20	365	1
 #0	1350	85	1
 #0	2050	365	1
+
+#Speech Bubble
+43	38.5	26	3
 [SCENE]
 #Stage1
-#Resources/Scene/start_scene.txt	176	64
 Resources/Scene/world_select_scene.txt	176	64
 Resources/Scene/scene1.txt	2816	656

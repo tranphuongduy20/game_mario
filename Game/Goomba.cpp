@@ -219,6 +219,30 @@ void Goomba::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 					if (e->nx != 0)
 						x += dx;
 				}
+				if (dynamic_cast<Brick*>(e->obj))
+				{
+					Brick* brick = dynamic_cast<Brick*>(e->obj);
+					if (e->nx != 0)
+					{
+						x += dx;
+					}
+					else if (e->ny < 0)
+					{
+						if (x <= brick->x)
+						{
+							x = brick->x;
+							this->nx = -this->nx;
+							SetState(GOOMBA_RED_STATE_HAS_WING_WALK);
+
+						}
+						else if (x >= brick->x + brick->frameW - 1 - GOOMBA_BBOX_WIDTH)
+						{
+							x = brick->x + brick->frameW - 1 - GOOMBA_BBOX_WIDTH;
+							this->nx = -this->nx;
+							SetState(GOOMBA_RED_STATE_HAS_WING_WALK);
+						}
+					}
+				}
 				else if (e->nx != 0)
 				{
 					this->nx = -this->nx;

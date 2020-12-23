@@ -52,10 +52,10 @@ void VenusBullet::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects, Player* play
 				player->level = MARIO_LEVEL_SMALL;
 				player->StartUntouchable();
 			}
-			else
+			else if (player->level == MARIO_LEVEL_SMALL)
 			{
 				player->SetState(MARIO_STATE_DIE);
-				return;
+				//return;
 			}
 		}
 		

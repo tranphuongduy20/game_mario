@@ -728,7 +728,7 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 							koopa->nx = 1;
 						}
 					}
-					else if (e->nx != 0)
+					else if (e->nx != 0 || e->ny > 0)
 					{
 						if (untouchable == 0)
 						{

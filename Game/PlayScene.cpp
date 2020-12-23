@@ -43,7 +43,7 @@ PlayScene::PlayScene() : Scene()
 {
 	keyHandler = new PlayScenceKeyHandler(this);
 	LoadBaseObjects();
-	ChooseMap(STAGE_1);
+	ChooseMap(2*STAGE_1);
 	Game::GetInstance()->ResetTimer();
 }
 
@@ -383,7 +383,16 @@ void PlayScene::PlayerTailAttackEnemy()
 			{
 				Leaf* leaf = dynamic_cast<Leaf*>(listLeaf[i]);
 				if (leaf->isOnTop == false)
+				{
 					listLeaf[i]->SetState(LEAF_STATE_WALKING);
+				}
+				/*else
+				{
+					player->SetLevel(MARIO_LEVEL_RACCOON);
+					leaf->isDeath = true;
+					leaf->make1000 = true;
+					Game::GetInstance()->Score += 1000;
+				}*/
 			}
 		}
 	}
