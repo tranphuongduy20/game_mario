@@ -201,11 +201,11 @@ void Goomba::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 						}
 					}
 				}
-				if (dynamic_cast<BrickStand*>(e->obj))
+				/*if (dynamic_cast<BrickStand*>(e->obj))
 				{
 					if (e->nx != 0)
 						x += dx;
-				}
+				}*/
 				else if (e->nx != 0)
 				{
 					this->nx = -this->nx;
