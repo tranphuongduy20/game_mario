@@ -27,7 +27,7 @@
 #include "RaccoonTail.h"
 #include "P.h"
 #include "Pipe.h"
-//#include "WorldMapMario.h"
+#include "WorldMapMario.h"
 
 #include "MarioBullet.h"
 
@@ -44,6 +44,7 @@ class PlayScene : public Scene
 public:
 
 protected:
+	WorldMapMario* mario;
 	TileMap* tilemap;
 	//WorldMapMario* worldPlayer;
 	Player* player;
@@ -69,9 +70,16 @@ protected:
 	vector<LPGAMEENTITY> listCoins;
 	vector<LPGAMEENTITY> listBrick;
 	vector<LPGAMEENTITY> listPipe;
+
 	int idStage;
 	int mapWidth, mapHeight;
 	int camMaxWidth;
+
+	vector<vector<int>> mapGrid;
+	int posMario = 10;
+	DWORD countDownReset = 0;
+	bool hasLoadGrid = false;
+	bool CheckIfCanMove(D3DXVECTOR2 dir);
 
 	void _ParseSection_TEXTURES(string line);
 	void _ParseSection_SPRITES(string line);
@@ -90,7 +98,7 @@ protected:
 
 public:
 	PlayScene();
-
+	int idWorldMario;
 	void LoadBaseObjects();
 	void LoadBaseTextures();
 	bool IsOutSideCamera(LPGAMEENTITY);

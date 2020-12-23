@@ -191,7 +191,7 @@ public:
 	bool goHiddenArea;
 	bool leaveHiddenArea;
 	bool screenDim;
-
+	void Reset();
 	void SetState(int state);
 	void SetLevel(int l) { level = l; }
 	bool GetIsRun() { return this->isRun == true && this->vx != 0; }

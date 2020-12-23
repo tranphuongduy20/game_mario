@@ -3,9 +3,14 @@
 0	Resources\Textures\Mario.png	255	255	255
 1	Resources\Textures\Item\misc.png	176	224	248
 2	Resources\Textures\Enemy\enemy.png	255	255	255
+3	Resources\Textures\Title\title-screen.png	255	242	0
+4	Resources\Textures\Title\title.png	255	255	255
 -200	Resources\Textures\darken-the-screen.png	255	255	0
 # id	left	top	width	height	texture_id
 [SPRITES]
+#----------BACKGROUND-----------------
+0	782	226	256	224	3
+
 # SMALL MARIO
 # IDLE FRONT
 10001	397	8	16	16	0

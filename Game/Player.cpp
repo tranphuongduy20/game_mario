@@ -44,6 +44,29 @@ Player::Player(float x, float y) : Entity()
 	keyUp = keyDown = false;
 }
 
+void Player::Reset()
+{
+	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(ANIMATION_SET_PLAYER));
+	level = MARIO_LEVEL_SMALL;
+	untouchable = 0;
+	SetState(MARIO_ANI_SMALL_IDLE);
+	start_x = x;
+	start_y = y;
+	backup_JumpY = 0;
+	dGround = 0;
+	isFly = false;
+	flyTrip = false;
+	isCheckCanFly = true;
+	this->x = 20;
+	this->y = 300;
+	nx = 1;
+	holdthing = nullptr;
+	startVentTime = GetTickCount64();
+	isInGround = venting;
+	keyUp = keyDown = false;
+	isDie = false;
+}
+
 Player* Player::instance = NULL;
 Player* Player::GetInstance()
 {
@@ -75,8 +98,8 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 		ExcuteVentProcess();
 	}
 
-	//DebugOut(L"X = %f y = %f \n", x,y);
-	//DebugOut(L"Vy = %f \n", vy);
+	DebugOut(L"X = %f y = %f \n", x,y);
+	DebugOut(L"Vy = %f \n", vy);
 	//DebugOut(L"State %d \n", state);
 	Entity::Update(dt);
 
