@@ -15,6 +15,7 @@ Entity::Entity()
 	direction = 1;
 	bbARGB = 200;
 	isEnabled = true;
+	isDead = false;
 }
 
 void Entity::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)

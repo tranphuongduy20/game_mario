@@ -89,7 +89,6 @@ void RaccoonTail::GetBoundingBox(float& left, float& top, float& right, float& b
 		top = 0;
 		right = 0;
 		bottom = 0;*/
-		return;
 	}
 }
 

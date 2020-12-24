@@ -137,7 +137,6 @@ public:
 	vector<LPGAMEENTITY> listitems;
 	int level;
 	int lastnx;
-	int untouchable;
 	bool isGround;
 	bool isWaitingForAni;
 	DWORD untouchable_start;
@@ -183,6 +182,7 @@ public:
 	virtual void Collision_items(vector<LPGAMEENTITY>* listitem);
 
 	float startVentTime;
+	int untouchable;
 	bool isInGround, venting;
 	bool keyDown, keyUp;
 	bool inStartOfPipe;

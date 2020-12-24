@@ -41,7 +41,7 @@ PlayScene::PlayScene() : Scene()
 {
 	keyHandler = new PlayScenceKeyHandler(this);
 	LoadBaseObjects();
-	ChooseMap(STAGE_1);
+	ChooseMap(2*STAGE_1);
 	Game::GetInstance()->ResetTimer();
 }
 
@@ -95,8 +95,8 @@ void PlayScene::ChooseMap(int whatMap)
 
 bool PlayScene::IsOutSideCamera(LPGAMEENTITY entity) {
 	Game* game = Game::GetInstance();
-	if (entity->x > game->GetCamPosX() - SCREEN_WIDTH / 2 && entity->x < game->GetCamPosX() + SCREEN_WIDTH * 3 / 2
-		&& entity->y > game->GetCamPosY() - SCREEN_HEIGHT / 2 && entity->y < game->GetCamPosY() + SCREEN_HEIGHT * 3 / 2)	return false;
+	if (entity->x > game->GetCamPosX() - SCREEN_WIDTH && entity->x < game->GetCamPosX() + SCREEN_WIDTH * 2
+		&& entity->y > game->GetCamPosY() - SCREEN_HEIGHT && entity->y < game->GetCamPosY() + SCREEN_HEIGHT * 2)	return false;
 	return true;
 }
 
@@ -247,16 +247,16 @@ void PlayScene::PlayerTailAttackEnemy()
 			auto goomba = dynamic_cast<Goomba*>(listEnemies[i]);
 			if (goomba->id_goomba == GOOMBA_NORMAL)
 			{
-				if (tail->IsCollidingObject(listEnemies[i]))
+				if (tail->IsCollidingObject(goomba) && goomba->GetState() != GOOMBA_STATE_DIE)
 				{
-					listEnemies[i]->SetState(GOOMBA_STATE_DIE_FLY);
+					goomba->SetState(GOOMBA_STATE_DIE_FLY);
 					goomba->make100 = true;
 					Game::GetInstance()->Score += 100;
 				}
 			}
-			else if (goomba->id_goomba == GOOMBA_RED)
+			else if (goomba->id_goomba == GOOMBA_RED && goomba->GetState() != GOOMBA_RED_STATE_NO_WING_DIE)
 			{
-				if (tail->IsCollidingObject(listEnemies[i]))
+				if (tail->IsCollidingObject(goomba))
 				{
 					listEnemies[i]->SetState(GOOMBA_RED_STATE_NO_WING_DIE_FLY);
 					goomba->make100 = true;

@@ -42,6 +42,7 @@ void VenusBullet::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects, Player* play
 			isCollision = 1;
 			vx = 0;
 			vy = 0;
+			if (player->untouchable == 1)	return;
 			if (player->level > MARIO_LEVEL_BIG)
 			{
 				player->level = MARIO_LEVEL_BIG;
@@ -55,7 +56,7 @@ void VenusBullet::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects, Player* play
 			else if (player->level == MARIO_LEVEL_SMALL)
 			{
 				player->SetState(MARIO_STATE_DIE);
-				//return;
+				return;
 			}
 		}
 		

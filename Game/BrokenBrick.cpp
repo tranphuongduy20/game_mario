@@ -85,6 +85,7 @@ void BrokenBrick::GetBoundingBox(float& l, float& t, float& r, float& b)
 }
 void BrokenBrick::SetState(int State)
 {
+	if (isDestroyed)	return;
 	Entity::SetState(State);
 	switch (State)
 	{

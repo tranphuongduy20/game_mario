@@ -57,7 +57,7 @@ void Player::Reset()
 	isFly = false;
 	flyTrip = false;
 	isCheckCanFly = true;
-	this->x = 20;
+	this->x = 1920;
 	this->y = 300;
 	nx = 1;
 	holdthing = nullptr;
@@ -251,10 +251,9 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 					else
 						y += dy;
 				}
-				//if (e->ny < 0)
-				//{
-				//	isJumping = false;
-				//}
+				else if (e->nx != 0) {
+					x += dx;
+				}
 			}
 			else if (e->obj->GetType() == EntityType::BROKENBRICK)
 			{
