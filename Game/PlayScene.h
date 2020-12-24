@@ -29,7 +29,8 @@
 #include "P.h"
 #include "Pipe.h"
 #include "WorldMapMario.h"
-
+#include "AnimationIntro.h"
+#include "IntroScene.h"
 #include "MarioBullet.h"
 
 
@@ -45,6 +46,9 @@ class PlayScene : public Scene
 public:
 
 protected:
+	bool isIntro = true;
+	AnimationIntro* aniIntro;
+	IntroScene* introScene;
 	WorldMapMario* mario;
 	TileMap* tilemap;
 	//WorldMapMario* worldPlayer;

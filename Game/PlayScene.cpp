@@ -41,7 +41,7 @@ PlayScene::PlayScene() : Scene()
 {
 	keyHandler = new PlayScenceKeyHandler(this);
 	LoadBaseObjects();
-	ChooseMap(2*STAGE_1);
+	ChooseMap(STAGE_1);
 	Game::GetInstance()->ResetTimer();
 }
 
@@ -76,6 +76,16 @@ void PlayScene::LoadBaseObjects()
 		tail = new RaccoonTail();
 		DebugOut(L"[INFO] tail CREATED! \n");
 	}
+	if (introScene == NULL)
+	{
+		introScene = new IntroScene();
+		DebugOut(L"[INFO] introScene CREATED! \n");
+	}
+	if (aniIntro == NULL)
+	{
+		aniIntro = new AnimationIntro();
+		DebugOut(L"[INFO] introScene CREATED! \n");
+	}
 }
 
 void PlayScene::ChooseMap(int whatMap)
@@ -106,6 +116,8 @@ void PlayScene::DisableEntityOutsideCamera(LPGAMEENTITY entity) {
 
 void PlayScene::Update(DWORD dt)
 {
+	if (isIntro)
+		return;
 	DebugOut(L"stage %d \n", idStage);
 	Game* game = Game::GetInstance();
 	game->TimerTick(dt);
@@ -157,7 +169,7 @@ void PlayScene::Update(DWORD dt)
 	for (int i = 0; (unsigned)i < listBullets.size(); i++)
 		if(listBullets.at(i)->isEnabled) listBullets[i]->Update(dt, &fullObjects);
 	for (int i = 0; (unsigned)i < listEnemies.size(); i++)
-		if (listEnemies.at(i)->isEnabled) listEnemies[i]->Update(dt, &coObjects);
+		if (listEnemies.at(i)->isEnabled) listEnemies[i]->Update(dt, &fullObjects);
 	for (int i = 0; (unsigned)i < listObjects.size(); i++)
 	{
 		if (dynamic_cast<Brick*>(listObjects[i]))
@@ -958,164 +970,171 @@ void PlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	float x, y;
 	int direction;
 	player->GetInfoForBullet(direction, x, y);
-	if (playScene->idStage == 500)
-	{ 
-		if (playScene->mario->isMoving == true)
-			return;
-		switch (KeyCode)
-		{
-		case DIK_UP:
-			if (playScene->CheckIfCanMove(D3DXVECTOR2(0, 1)))
-			{
-				playScene->mario->Move(D3DXVECTOR2(0, 1));
-			}
-			break;
-		case DIK_DOWN:
-			if (playScene->CheckIfCanMove(D3DXVECTOR2(0, -1)))
-			{
-				playScene->mario->Move(D3DXVECTOR2(0, -1));
-			}
-			break;
-		case DIK_LEFT:
-			if (playScene->CheckIfCanMove(D3DXVECTOR2(-1, 0)))
-			{
-				playScene->mario->Move(D3DXVECTOR2(-1, 0));
-			}
-			break;
-		case DIK_RIGHT:
-			if (playScene->CheckIfCanMove(D3DXVECTOR2(1, 0)))
-			{
-				playScene->mario->Move(D3DXVECTOR2(1, 0));
-			}
-			break;
-		case DIK_J:
-			if (playScene->posMario == 1)
-			{
-				playScene->ChooseMap(1000);
-			}
-
-		default:
-			break;
-		}
+	if (playScene->isIntro)
+	{
+		playScene->isIntro = false;
 	}
 	else
 	{
-		switch (KeyCode)
+		if (playScene->idStage == 500)
 		{
-		case DIK_S:
-			player->SetState(MARIO_STATE_JUMP);
-			break;
-		case DIK_DOWN:
-			player->keyDown == true;
-			if (player->y > 80 && player->y < 97 && player->x > 2263 && player->x < 2270)
+			if (playScene->mario->isMoving == true)
+				return;
+			switch (KeyCode)
 			{
-				player->isOnPipe = true;
-				player->SetState(MARIO_STATE_INTO_PIPE);
-				playScene->isDark = true;
-			}
-			break;
-		case DIK_UP:
-			player->keyUp == true;
-			if (player->y > 497 && player->y < 500 && player->x > 2325 && player->x < 2335 && playScene->isHiddenArea == true)
-			{
-				player->isOnPipe = true;
-				player->SetState(MARIO_STATE_OUT_PIPE);
-				playScene->isDark = true;
-			}
-			break;
-		case DIK_Z:
-			player->isAttack = true;
-			break;
-		case DIK_J:
-			playScene->ChooseMap(1000);
-			break;
-		case DIK_V:
-			if (player->level != MARIO_LEVEL_SMALL)
-				player->y += (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT);
-			player->level = MARIO_LEVEL_SMALL;
-			break;
-		case DIK_B:
-			if (player->level == MARIO_LEVEL_SMALL)
-				player->y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT);
-			player->level = MARIO_LEVEL_BIG;
-			break;
-		case DIK_N:
-			if (player->level == MARIO_LEVEL_SMALL)
-				player->y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT);
-			player->level = MARIO_LEVEL_RACCOON;
-			break;
-		case DIK_M:
-			if (player->level == MARIO_LEVEL_SMALL)
-				player->y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT);
-			player->level = MARIO_LEVEL_FIRE;
-			break;
-		case DIK_A:
-			player->isAttack = true;
-			if (player->level == MARIO_LEVEL_FIRE)
-			{
-				player->isBullet = true;
-				player->shootTime = GetTickCount64();
-				for (int i = 0; i < listBullets.size(); i++)
+			case DIK_UP:
+				if (playScene->CheckIfCanMove(D3DXVECTOR2(0, 1)))
 				{
-					if (listBullets[i]->isDone == true)
+					playScene->mario->Move(D3DXVECTOR2(0, 1));
+				}
+				break;
+			case DIK_DOWN:
+				if (playScene->CheckIfCanMove(D3DXVECTOR2(0, -1)))
+				{
+					playScene->mario->Move(D3DXVECTOR2(0, -1));
+				}
+				break;
+			case DIK_LEFT:
+				if (playScene->CheckIfCanMove(D3DXVECTOR2(-1, 0)))
+				{
+					playScene->mario->Move(D3DXVECTOR2(-1, 0));
+				}
+				break;
+			case DIK_RIGHT:
+				if (playScene->CheckIfCanMove(D3DXVECTOR2(1, 0)))
+				{
+					playScene->mario->Move(D3DXVECTOR2(1, 0));
+				}
+				break;
+			case DIK_J:
+				if (playScene->posMario == 1)
+				{
+					playScene->ChooseMap(1000);
+				}
+
+			default:
+				break;
+			}
+		}
+		else
+		{
+			switch (KeyCode)
+			{
+			case DIK_S:
+				player->SetState(MARIO_STATE_JUMP);
+				break;
+			case DIK_DOWN:
+				player->keyDown == true;
+				if (player->y > 80 && player->y < 97 && player->x > 2263 && player->x < 2270)
+				{
+					player->isOnPipe = true;
+					player->SetState(MARIO_STATE_INTO_PIPE);
+					playScene->isDark = true;
+				}
+				break;
+			case DIK_UP:
+				player->keyUp == true;
+				if (player->y > 497 && player->y < 500 && player->x > 2325 && player->x < 2335 && playScene->isHiddenArea == true)
+				{
+					player->isOnPipe = true;
+					player->SetState(MARIO_STATE_OUT_PIPE);
+					playScene->isDark = true;
+				}
+				break;
+			case DIK_Z:
+				player->isAttack = true;
+				break;
+			case DIK_J:
+				playScene->ChooseMap(1000);
+				break;
+			case DIK_V:
+				if (player->level != MARIO_LEVEL_SMALL)
+					player->y += (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT);
+				player->level = MARIO_LEVEL_SMALL;
+				break;
+			case DIK_B:
+				if (player->level == MARIO_LEVEL_SMALL)
+					player->y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT);
+				player->level = MARIO_LEVEL_BIG;
+				break;
+			case DIK_N:
+				if (player->level == MARIO_LEVEL_SMALL)
+					player->y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT);
+				player->level = MARIO_LEVEL_RACCOON;
+				break;
+			case DIK_M:
+				if (player->level == MARIO_LEVEL_SMALL)
+					player->y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT);
+				player->level = MARIO_LEVEL_FIRE;
+				break;
+			case DIK_A:
+				player->isAttack = true;
+				if (player->level == MARIO_LEVEL_FIRE)
+				{
+					player->isBullet = true;
+					player->shootTime = GetTickCount64();
+					for (int i = 0; i < listBullets.size(); i++)
 					{
-						listBullets[i]->Fire(direction, x, y);
-						break;
+						if (listBullets[i]->isDone == true)
+						{
+							listBullets[i]->Fire(direction, x, y);
+							break;
+						}
 					}
 				}
-			}
-			else if (player->level == MARIO_LEVEL_RACCOON)
-			{
-				playScene->tail->Attack();
-			}
-			break;
-		case DIK_F6:
-			for (int i = 0; i < listObjects.size(); i++)
-			{
-				if (listObjects[i]->GetBBARGB() == 0)
-					listObjects[i]->SetBBARGB(200);
-				else
-					listObjects[i]->SetBBARGB(0);
-			}
-			for (int i = 0; i < listEnemies.size(); i++)
-			{
-				if (listEnemies[i]->GetBBARGB() == 0)
-					listEnemies[i]->SetBBARGB(200);
-				else
-					listEnemies[i]->SetBBARGB(0);
-			}
-			for (int i = 0; i < listLeaf.size(); i++)
-			{
-				if (listLeaf[i]->GetBBARGB() == 0)
-					listLeaf[i]->SetBBARGB(200);
-				else
-					listLeaf[i]->SetBBARGB(0);
-			}
-			for (int i = 0; i < listitems.size(); i++)
-			{
-				if (listitems[i]->GetBBARGB() == 0)
-					listitems[i]->SetBBARGB(200);
-				else
-					listitems[i]->SetBBARGB(0);
-			}
+				else if (player->level == MARIO_LEVEL_RACCOON)
+				{
+					playScene->tail->Attack();
+				}
+				break;
+			case DIK_F6:
+				for (int i = 0; i < listObjects.size(); i++)
+				{
+					if (listObjects[i]->GetBBARGB() == 0)
+						listObjects[i]->SetBBARGB(200);
+					else
+						listObjects[i]->SetBBARGB(0);
+				}
+				for (int i = 0; i < listEnemies.size(); i++)
+				{
+					if (listEnemies[i]->GetBBARGB() == 0)
+						listEnemies[i]->SetBBARGB(200);
+					else
+						listEnemies[i]->SetBBARGB(0);
+				}
+				for (int i = 0; i < listLeaf.size(); i++)
+				{
+					if (listLeaf[i]->GetBBARGB() == 0)
+						listLeaf[i]->SetBBARGB(200);
+					else
+						listLeaf[i]->SetBBARGB(0);
+				}
+				for (int i = 0; i < listitems.size(); i++)
+				{
+					if (listitems[i]->GetBBARGB() == 0)
+						listitems[i]->SetBBARGB(200);
+					else
+						listitems[i]->SetBBARGB(0);
+				}
 
 
-			if (player->GetBBARGB() == 0)
-				player->SetBBARGB(200);
-			else
-				player->SetBBARGB(0);
+				if (player->GetBBARGB() == 0)
+					player->SetBBARGB(200);
+				else
+					player->SetBBARGB(0);
 
-			if (bullet1->GetBBARGB() == 0)
-				bullet1->SetBBARGB(200);
-			else
-				bullet1->SetBBARGB(0);
+				if (bullet1->GetBBARGB() == 0)
+					bullet1->SetBBARGB(200);
+				else
+					bullet1->SetBBARGB(0);
 
-			if (bullet2->GetBBARGB() == 0)
 				if (bullet2->GetBBARGB() == 0)
-					bullet2->SetBBARGB(200);
-				else
-					bullet2->SetBBARGB(0);
-			break;
+					if (bullet2->GetBBARGB() == 0)
+						bullet2->SetBBARGB(200);
+					else
+						bullet2->SetBBARGB(0);
+				break;
+			}
 		}
 	}
 }
@@ -1838,35 +1857,43 @@ void PlayScene::Unload()
 
 void PlayScene::Render()
 {
-	if (idStage == 500)
-		tilemap->Draw(0, 220);
-	else
-		tilemap->Draw(0, 0);
-	for (int i = 0; i < listObjects.size(); i++)
-		listObjects[i]->Render();
-	for (int i = 0; i < listitems.size(); i++)
-		listitems[i]->Render();
-	for (int i = 0; i < listLeaf.size(); i++)
-		listLeaf[i]->Render();
-	for (int i = 0; i < listEnemies.size(); i++)
-		listEnemies[i]->Render();
-	for (int i = 0; i < listCoins.size(); i++)
-		listCoins[i]->Render();
-	
-	if (idStage == 500)
-		mario->Render();
+	if (isIntro)
+	{
+		introScene->Render();
+		aniIntro->Render();
+	}
 	else
 	{
-		player->Render();
+		if (idStage == 500)
+			tilemap->Draw(0, 220);
+		else
+			tilemap->Draw(0, 0);
+		for (int i = 0; i < listObjects.size(); i++)
+			listObjects[i]->Render();
+		for (int i = 0; i < listitems.size(); i++)
+			listitems[i]->Render();
+		for (int i = 0; i < listLeaf.size(); i++)
+			listLeaf[i]->Render();
+		for (int i = 0; i < listEnemies.size(); i++)
+			listEnemies[i]->Render();
+		for (int i = 0; i < listCoins.size(); i++)
+			listCoins[i]->Render();
+
+		if (idStage == 500)
+			mario->Render();
+		else
+		{
+			player->Render();
+		}
+		//supBullet->Render();
+		for (int i = 0; i < listBullets.size(); i++)
+			listBullets[i]->Render();
+		tail->Render();
+		for (int i = 0; i < listPipe.size(); i++)
+			listPipe[i]->Render();
+		gameHUD->Draw();
+		DarkenTheScreen();
 	}
-	//supBullet->Render();
-	for (int i = 0; i < listBullets.size(); i++)
-		listBullets[i]->Render();
-	tail->Render();
-	for (int i = 0; i < listPipe.size(); i++)
-		listPipe[i]->Render();
-	gameHUD->Draw();
-	DarkenTheScreen();
 }
 
 

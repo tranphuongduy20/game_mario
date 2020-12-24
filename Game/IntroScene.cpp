@@ -6,7 +6,7 @@
 
 IntroScene::IntroScene(float x, float y) : Entity()
 {
-	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(7));
+	this->SetAnimationSet(CAnimationSets::GetInstance()->Get(2));
 	this->x = x;
 	this->y = y;
 }
@@ -31,7 +31,7 @@ void IntroScene::Render()
 	int alpha = 255;
 	int current_frame; //luu frame khi dang di chuyen ma dung lai
 #pragma endregion
-	//animationSet->at(typeScene)->OldRender(x, y, alpha);
+	animationSet->at(0)->Render(1, x, y, alpha);
 	RenderBoundingBox();
 }
 

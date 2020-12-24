@@ -261,6 +261,15 @@ void Koopa::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 						}
 					}
 				}
+				else if (dynamic_cast<CBrick*>(e->obj))
+				{
+					CBrick* cBrick = dynamic_cast<CBrick*>(e->obj);
+					if (GetState() == KOOPA_RED_STATE_DIE_AND_MOVE || GetState() == KOOPA_RED_STATE_DIE_AND_MOVE_UP)
+					{
+						cBrick->SetState(CBRICK_STATE_COLLISION);
+						vx = -vx;
+					}
+				}
 				else if (dynamic_cast<Goomba*>(e->obj))
 				{
 					Goomba* goomba = dynamic_cast<Goomba*>(e->obj);
@@ -268,7 +277,7 @@ void Koopa::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 					{
 						if (goomba->id_goomba == GOOMBA_NORMAL)
 						{
-							listEnemies[i]->SetState(GOOMBA_STATE_DIE_FLY);
+							goomba->SetState(GOOMBA_STATE_DIE_FLY);
 							goomba->make100 = true;
 							Game::GetInstance()->Score += 100;
 						}
