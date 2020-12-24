@@ -17,7 +17,7 @@ public:
 	int GetLimitTime() { return limitTime; }
 
 	void Start() { startTime = GetTickCount(); }
-	bool IsTimeUp() { return GetTickCount() - startTime >= limitTime; }
+	bool IsTimeUp() { return GetTickCount() - startTime >= (unsigned)limitTime; }
 	void AddToTimer(int msec) { startTime += msec; }
 	void Reset() { startTime = 0; }
 	void Reset(int newLimitTime) { startTime = 0; limitTime = newLimitTime; }

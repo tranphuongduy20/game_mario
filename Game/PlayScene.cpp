@@ -6,7 +6,6 @@
 #include "WorldMapMario.h"
 #include "HammerBrother.h"
 #include "SpeechBubble.h"
-#include "Title.h"
 
 #define OBJECT_TYPE_MARIO		0
 #define OBJECT_TYPE_BRICK		1
@@ -31,7 +30,6 @@
 #define	OBJECT_TYPE_MARIO_WORLDMAP	31
 #define	OBJECT_TYPE_HAMMER_BROTHER	32
 #define	OBJECT_TYPE_MSPEECH_BUBBLE	33
-#define OBJECT_TYPE_TITLE			43
 
 #define CAMERA_HEIGHT_1 245
 #define CAMERA_HEIGHT_2 184
@@ -43,7 +41,7 @@ PlayScene::PlayScene() : Scene()
 {
 	keyHandler = new PlayScenceKeyHandler(this);
 	LoadBaseObjects();
-	ChooseMap(2*STAGE_1);
+	ChooseMap(STAGE_1);
 	Game::GetInstance()->ResetTimer();
 }
 
@@ -137,13 +135,13 @@ void PlayScene::Update(DWORD dt)
 
 
 
-	for (int i = 0; i < listObjects.size(); i++)
+	for (int i = 0; (unsigned)i < listObjects.size(); i++)
 	{
 		DisableEntityOutsideCamera(listObjects.at(i));
 		coObjects.push_back(listObjects[i]);
 		fullObjects.push_back(listObjects[i]);
 	}
-	for (int i = 0; i < listEnemies.size(); i++)
+	for (int i = 0; (unsigned)i < listEnemies.size(); i++)
 	{
 		DisableEntityOutsideCamera(listEnemies.at(i));
 		fullObjects.push_back(listEnemies[i]);
@@ -156,22 +154,22 @@ void PlayScene::Update(DWORD dt)
 	{
 		player->Update(dt, &fullObjects);
 	}
-	for (int i = 0; i < listBullets.size(); i++)
+	for (int i = 0; (unsigned)i < listBullets.size(); i++)
 		if(listBullets.at(i)->isEnabled) listBullets[i]->Update(dt, &fullObjects);
-	for (int i = 0; i < listEnemies.size(); i++)
+	for (int i = 0; (unsigned)i < listEnemies.size(); i++)
 		if (listEnemies.at(i)->isEnabled) listEnemies[i]->Update(dt, &coObjects);
-	for (int i = 0; i < listObjects.size(); i++)
+	for (int i = 0; (unsigned)i < listObjects.size(); i++)
 	{
 		if (dynamic_cast<Brick*>(listObjects[i]))
 		{ }
 		else
 			if (listObjects.at(i)->isEnabled) listObjects[i]->Update(dt, &fullObjects);
 	}
-	for (int i = 0; i < listLeaf.size(); i++)
+	for (int i = 0; (unsigned)i < listLeaf.size(); i++)
 		if (listLeaf.at(i)->isEnabled) listLeaf[i]->Update(dt, &coObjects2);
-	for (int i = 0; i < listCoins.size(); i++)
+	for (int i = 0; (unsigned)i < listCoins.size(); i++)
 		if (listCoins.at(i)->isEnabled) listCoins[i]->Update(dt, &coObjects2);
-	for (int i = 0; i < listitems.size(); i++)
+	for (int i = 0; (unsigned)i < listitems.size(); i++)
 		if (listitems.at(i)->isEnabled) listitems[i]->Update(dt, &coObjects);
 	tail->Update(dt, &fullObjects, player->x, player->y);
 #pragma endregion
@@ -200,7 +198,7 @@ void PlayScene::Update(DWORD dt)
 	{
 		if (!player) return;
 
-		float marioBox = player->level == MARIO_LEVEL_SMALL ? MARIO_SMALL_BBOX_HEIGHT : MARIO_BIG_BBOX_HEIGHT;
+		int marioBox = player->level == MARIO_LEVEL_SMALL ? MARIO_SMALL_BBOX_HEIGHT : MARIO_BIG_BBOX_HEIGHT;
 
 		float cx, cy;
 		player->GetPosition(cx, cy);
@@ -1631,15 +1629,6 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		listObjects.push_back(obj);
 		break;
 	}
-	case OBJECT_TYPE_TITLE:
-	{
-		obj = new Title();
-		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
-		obj->SetAnimationSet(ani_set);
-		obj->SetPosition(x, y);
-		listObjects.push_back(obj);
-		break;
-	}
 	case OBJECT_TYPE_GATE:
 	{
 		int switchId = atoi(tokens[3].c_str());
@@ -1853,8 +1842,6 @@ void PlayScene::Render()
 		tilemap->Draw(0, 220);
 	else
 		tilemap->Draw(0, 0);
-	//DrawBackground();
-	//DrawOptions();
 	for (int i = 0; i < listObjects.size(); i++)
 		listObjects[i]->Render();
 	for (int i = 0; i < listitems.size(); i++)
@@ -1882,19 +1869,4 @@ void PlayScene::Render()
 	DarkenTheScreen();
 }
 
-void PlayScene::DrawBackground()
-{
-	auto sprites = CSprites::GetInstance();
-
-	auto bg = sprites->Get(0);
-	bg->Draw(1, 0, 1);
-}
-
-void PlayScene::DrawOptions()
-{
-	auto sprites = CSprites::GetInstance();
-
-	auto option = curOption == 0 ? sprites->Get(4000) : sprites->Get(4001);
-	option->Draw(1, 72, 146);
-}
 

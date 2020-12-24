@@ -119,8 +119,6 @@ public:
 	Player* GetPlayer() { return player; }
 	void DarkenTheScreen();
 	void LightTheScreen();
-	void DrawBackground();
-	void DrawOptions();
 	double colorSubtrahend;
 	int alpha = 0;
 	bool isDark = false;

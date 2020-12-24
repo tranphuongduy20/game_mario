@@ -148,6 +148,7 @@
     <ClInclude Include="HammerBrother.h" />
     <ClInclude Include="HealthBar.h" />
     <ClInclude Include="HUD.h" />
+    <ClInclude Include="IntroScene.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="KeyboardHandler.h" />
     <ClInclude Include="Koopa.h" />
@@ -171,7 +172,6 @@
     <ClInclude Include="Textures.h" />
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="Timer.h" />
-    <ClInclude Include="Title.h" />
     <ClInclude Include="Venus.h" />
     <ClInclude Include="VenusBullet.h" />
     <ClInclude Include="VenusNoFire.h" />
@@ -204,6 +204,7 @@
     <ClCompile Include="HammerBrother.cpp" />
     <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="IntroScene.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Koopa.cpp" />
     <ClCompile Include="Leaf.cpp" />
@@ -227,7 +228,6 @@
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="Timer.cpp" />
-    <ClCompile Include="Title.cpp" />
     <ClCompile Include="Venus.cpp" />
     <ClCompile Include="VenusBullet.cpp" />
     <ClCompile Include="VenusNoFire.cpp" />
