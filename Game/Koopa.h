@@ -60,6 +60,7 @@ public:
 	bool hitByWeapon;
 	int startx, widthtogo;
 	Koopa(Player* mario, int id_Koopa);
+	vector<LPGAMEENTITY> listLeaf;
 	int last_state;
 	Player* Mario;
 	vector<LPGAMEENTITY> listEnemies;

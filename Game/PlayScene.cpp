@@ -179,7 +179,7 @@ void PlayScene::Update(DWORD dt)
 			if (listObjects.at(i)->isEnabled) listObjects[i]->Update(dt, &fullObjects);
 	}
 	for (int i = 0; (unsigned)i < listLeaf.size(); i++)
-		if (listLeaf.at(i)->isEnabled) listLeaf[i]->Update(dt, &coObjects2);
+		if (listLeaf.at(i)->isEnabled) listLeaf[i]->Update(dt, &fullObjects);
 	for (int i = 0; (unsigned)i < listCoins.size(); i++)
 		if (listCoins.at(i)->isEnabled) listCoins[i]->Update(dt, &coObjects2);
 	for (int i = 0; (unsigned)i < listitems.size(); i++)
@@ -390,8 +390,7 @@ void PlayScene::PlayerTailAttackEnemy()
 	}
 	for (UINT i = 0; i < listLeaf.size(); i++)
 	{
-
-		if (listLeaf[i]->GetType() == EntityType::LEAF && (player->level == MARIO_LEVEL_BIG || player->level == MARIO_LEVEL_RACCOON) && isCheckMushroom == false)
+		if (listLeaf[i]->GetType() == EntityType::LEAF && (player->level == MARIO_LEVEL_BIG || player->level == MARIO_LEVEL_RACCOON ) && isCheckMushroom == false)
 		{
 			if (tail->IsCollidingObject(listLeaf[i]) && player->level)
 			{

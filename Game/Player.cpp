@@ -61,7 +61,7 @@ void Player::Reset()
 	isFly = false;
 	flyTrip = false;
 	isCheckCanFly = true;
-	this->x = 20;
+	this->x = 630;
 	this->y = 300;
 	nx = 1;
 	holdthing = nullptr;
@@ -815,35 +815,6 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 
 void Player::Collision_items(vector<LPGAMEENTITY>* coObjects)
 {
-	//float l, t, r, b, ln, tn, rn, btn;
-	//GetBoundingBox(l, t, r, b);
-	//for (UINT i = 0; i < coObjects->size(); i++)
-	//{
-	//	LPGAMEENTITY e = coObjects->at(i);
-	//	e->GetBoundingBox(ln, tn, rn, btn);
-	//	if (Entity::CheckAABB(l, t, r, b, ln, tn, rn, btn))
-	//	{
-
-	//		if (e->GetType() == EntityType::MUSH)
-	//		{
-	//			e->isdone = true;
-	//			y -= 20;
-	//			level = MARIO_LEVEL_BIG;
-
-	//		}
-	//		else if (e->GetType() == EntityType::LEAF)
-	//		{
-	//			y -= 5;
-	//			e->isdone = true;
-	//			level = MARIO_LEVEL_RACCOON;
-	//		}
-	//		/*else if (e->id_items == FIRE_FLOWER)
-	//		{
-	//			e->isdone = true;
-	//			level = MARIO_FIRE;
-	//		}*/
-	//	}
-	//}
 }
 
 

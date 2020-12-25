@@ -11,7 +11,7 @@
 #include "KeyboardHandler.h"
 #include "Camera.h"
 
-#define MAXTIMER 300.0f
+#define MAXTIMER 400.0f
 
 class Game
 {

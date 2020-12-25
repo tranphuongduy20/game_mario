@@ -4,6 +4,7 @@
 #include "Brick.h"
 #include "CBrick.h"
 #include "Goomba.h"
+#include "Leaf.h"
 
 Koopa::Koopa(Player* mario, int id_Koopa)
 {
@@ -283,6 +284,18 @@ void Koopa::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 						}
 					}
 				}
+				else if (dynamic_cast<Leaf*>(e->obj))
+				{
+					Leaf* leaf = dynamic_cast<Leaf*>(e->obj);
+					if (!leaf)	return;
+					if (GetState() == KOOPA_RED_STATE_DIE_AND_MOVE || GetState() == KOOPA_RED_STATE_DIE_AND_MOVE_UP)
+					{
+						if (leaf->isOnTop == false)
+						{
+							leaf->SetState(LEAF_STATE_WALKING);
+						}
+					}
+				}
 				else if (dynamic_cast<BrokenBrick*>(e->obj))
 				{
 					BrokenBrick* brokenbrick = dynamic_cast<BrokenBrick*>(e->obj);
@@ -452,7 +465,7 @@ void Koopa::SetState(int State)
 		break;
 	case KOOPA_RED_STATE_DIE_AND_MOVE:
 		//vx = nx * 0.1;
-		vx = Mario->nx* 0.3;
+		vx = Mario->nx* 0.1;
 		last_state = KOOPA_RED_STATE_DIE_AND_MOVE;
 		break;
 	case KOOPA_RED_STATE_REVIVE:
