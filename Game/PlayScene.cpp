@@ -26,6 +26,7 @@
 #define OBJECT_TYPE_P	16
 #define OBJECT_TYPE_PIPE	17
 #define OBJECT_TYPE_MUSHROOM_GREEN	18
+#define OBJECT_TYPE_END_SCENE		19
 #define OBJECT_TYPE_CACTUS			30
 #define	OBJECT_TYPE_MARIO_WORLDMAP	31
 #define	OBJECT_TYPE_HAMMER_BROTHER	32
@@ -41,7 +42,7 @@ PlayScene::PlayScene() : Scene()
 {
 	keyHandler = new PlayScenceKeyHandler(this);
 	LoadBaseObjects();
-	ChooseMap(STAGE_1);
+	ChooseMap(2*STAGE_1);
 	Game::GetInstance()->ResetTimer();
 }
 
@@ -333,17 +334,20 @@ void PlayScene::PlayerTailAttackEnemy()
 
 			if (tail->IsCollidingObject(brokenBrick))
 			{
-
+				
 				if (listObjects[i]->x == 2032 && listObjects[i]->y == 368)
 				{
 					for (UINT i = 0; i < listitems.size(); i++)
 					{
+						Entity* obj = new CBrick(2032, 368, 16, 16);
+						CBrick* cBrick = dynamic_cast<CBrick*>(obj);
 						if (listitems[i]->GetType() == EntityType::P)
 						{
 
 							ItemP* itemP = dynamic_cast<ItemP*>(listitems[i]);
 							itemP->isCollis = true;
 						}
+						cBrick->SetState(CBRICK_STATE_COLLISION);
 					}
 					return;
 				}
@@ -1453,6 +1457,17 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		obj->SetAnimationSet(ani_set);
 		listObjects.push_back(obj);
 		DebugOut(L"[test] add cbrick !\n");
+		break;
+	}
+	case OBJECT_TYPE_END_SCENE:
+	{
+		obj = new EndScene(x, y, atof(tokens[4].c_str()), atof(tokens[5].c_str()));
+		//obj->SetPosition(x, y);
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+
+		obj->SetAnimationSet(ani_set);
+		listObjects.push_back(obj);
+		DebugOut(L"[test] add endscene !\n");
 		break;
 	}
 	case OBJECT_TYPE_BRICKSTAND:

@@ -162,6 +162,8 @@ public:
 	bool isIntoPipe = false;
 	bool isOutPipe = false;
 	bool isReadyToDark = false;
+	float startTickToEndScene;
+	bool startEndScene;
 	Entity* holdthing;
 
 	int walkingDirection;

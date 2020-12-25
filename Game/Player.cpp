@@ -18,6 +18,8 @@
 #include "SceneManager.h"
 #include "PlayScene.h"
 
+#define END_SCENE_TIME 5000
+
 //class PlayScene;
 
 using namespace std;
@@ -33,6 +35,8 @@ Player::Player(float x, float y) : Entity()
 	backup_JumpY = 0;
 	dGround = 0;
 	isFly = false;
+	startTickToEndScene = GetTickCount64();
+	startEndScene = false;
 	flyTrip = false;
 	isCheckCanFly = true;
 	this->x = x;
@@ -57,7 +61,7 @@ void Player::Reset()
 	isFly = false;
 	flyTrip = false;
 	isCheckCanFly = true;
-	this->x = 1220;
+	this->x = 20;
 	this->y = 300;
 	nx = 1;
 	holdthing = nullptr;
@@ -102,6 +106,16 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 	DebugOut(L"Vy = %f \n", vy);
 	//DebugOut(L"State %d \n", state);
 	Entity::Update(dt);
+
+	if (startEndScene) {
+		vx = .08f;
+		nx = 1;
+		float delta = GetTickCount64() - startTickToEndScene;
+		if (delta > END_SCENE_TIME) {
+			dynamic_cast<PlayScene*>(SceneManager::GetInstance()->GetScene())->ChooseMap(STAGE_1);
+			return;
+		}
+	}
 
 	if (isIntoPipe)
 	{
@@ -280,11 +294,6 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 					else
 						y += dy;
 				}
-				/*if (e->ny > 0)
-				{
-					if(brokenbrick != nullptr)
-						brokenbrick->SetState(CBRICK_STATE_COLLISION);
-				}*/
 			}
 			else if (e->obj->GetType() == EntityType::CBRICK)  
 			{
@@ -306,17 +315,30 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 				if (e->ny > 0)
 				{
 					brick->SetState(CBRICK_STATE_COLLISION);
-					
-					//LPGAMEENTITY money = new Money(e->obj->x, e->obj->y - 20);
-					/////*if (money->isOnTop == false) {*/
-					//money->SetState(MONEY_STATE_WALKING);
-					//money->make100 = true;
-					//auto scene = dynamic_cast<PlayScene*>(SceneManager::GetInstance()->GetScene());
-					//if (!scene)	return;
-					//scene->AddObject(money);
-					////money->Render();
-					//Game::GetInstance()->Score += 100;
-					////}
+				}
+			}
+			else if (e->obj->GetType() == EntityType::ENDSCENE)
+			{
+				EndScene* endScene = dynamic_cast<EndScene*>(e->obj);
+				if (nx != 0) vx = 0;
+				if (ny != 0) vy = 0;
+				if (e->ny != 0)
+				{
+					if (e->ny == -1)
+					{
+						isGround = true;
+						isJumping = false;
+						if ((flyTrip && level == MARIO_LEVEL_RACCOON) || y > dGround) {
+							dGround = y + w;
+						}
+						flyTrip = false;
+					}
+				}
+				if (e->ny > 0)
+				{
+					endScene->SetState(ENDSCENE_STATE_COLLISION);
+					startEndScene = true;
+					startTickToEndScene = GetTickCount64();
 				}
 			}
 			else if (e->obj->GetType() == EntityType::BRICKSTAND)

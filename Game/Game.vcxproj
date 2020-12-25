@@ -139,6 +139,7 @@
     <ClInclude Include="Domes.h" />
     <ClInclude Include="EffectBrick.h" />
     <ClInclude Include="ElectricBullet.h" />
+    <ClInclude Include="EndScene.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Entity.h" />
@@ -196,6 +197,7 @@
     <ClCompile Include="Domes.cpp" />
     <ClCompile Include="EffectBrick.cpp" />
     <ClCompile Include="ElectricBullet.cpp" />
+    <ClCompile Include="EndScene.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Entity.cpp" />

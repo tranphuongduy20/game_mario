@@ -4,7 +4,7 @@
 5	Resources\Textures\Title\ui.png	255	127	39
 10	Resources\Textures\Enemy\enemies1.png	3	26	100
 20	Resources\Textures\Item\misc1.png	255	255	255
-21	Resources\Textures\Item\misc-2.png	255	255	255
+21	Resources\Textures\Item\misc-2.png	0	117	255
 30	Resources\Textures\Enemy\enemy.png	255	255	255
 40	Resources\Textures\Enemy\enemies.png	255	255	255
 50	Resources\Textures\Enemy\enemies_custom_2.png	255	255	255
@@ -273,6 +273,12 @@
 2005	433	157	32	48	21
 
 
+#====ENDSCENE=====
+2010	94	159	14	14	21
+2011	112	159	16	15	21
+2012	131	157	16	16	21
+
+
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
 # ==== GOOMBA  =========
@@ -460,6 +466,10 @@
 # short pipe pair with long one
 498	2005	100
 
+#=====ENDSCENE====
+550	2010	100	2011	100	2012	100
+
+
 # id	ani1	ani2	ani3
 #
 [ANIMATION_SETS]
@@ -509,6 +519,9 @@
 # PIPE
 40	500	505	502	499	498
 
+#ENDSCENE
+55	550
+
 #Point
 22	165	166	167	168	169	170	171	172	164
 
@@ -518,7 +531,7 @@
 
 # KOOPAS
 3	520	340	3	16	27
-3	2096	340	3	16	27
+3	2086	340	3	16	27
 3	1420	370	3	16	27
 14	1320	300	3	16	27
 14	1370	300	3	16	27
@@ -698,6 +711,9 @@
 17	2320	384	40	1
 17	2096	464	40	4
 17	2320	464	40	4
+
+#ENDSCENE
+19	2688	337	55	16	16
 
 #Gate
 #2	520	400	1	200	300	0	1

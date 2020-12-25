@@ -32,6 +32,7 @@
 #include "AnimationIntro.h"
 #include "IntroScene.h"
 #include "MarioBullet.h"
+#include "EndScene.h"
 
 
 #include <iostream>
